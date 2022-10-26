@@ -26,10 +26,17 @@ class UserFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
+            'apellidos' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
             'email_verified_at' => now(),
             'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
             'remember_token' => Str::random(10),
+            'poblacion' => $this->faker->city(),
+            'provincia' => $this->faker->city(),
+            'cp' => $this->faker->randomElement(['08226', '08334', '08445', '08444', '08997', '08545', '08024', '08767']),
+            'telefono' => $this->faker->numberBetween( 935364567, 967675988),
+            'fechanacimiento' => $this->faker->date(),
+            'profile_photo_path' => 'noimage.png',
         ];
     }
 

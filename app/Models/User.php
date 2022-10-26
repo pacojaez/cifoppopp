@@ -2,16 +2,17 @@
 
 namespace App\Models;
 
+use Laravel\Jetstream\HasTeams;
+use Laravel\Sanctum\HasApiTokens;
+use Laravel\Jetstream\HasProfilePhoto;
+use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Laravel\Fortify\TwoFactorAuthenticatable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Fortify\TwoFactorAuthenticatable;
-use Laravel\Jetstream\HasProfilePhoto;
-use Laravel\Jetstream\HasTeams;
-use Laravel\Sanctum\HasApiTokens;
 
-class User extends Authenticatable
+class User extends Authenticatable implements MustVerifyEmail
 {
     use HasApiTokens;
     use HasFactory;
@@ -19,6 +20,7 @@ class User extends Authenticatable
     use HasTeams;
     use Notifiable;
     use TwoFactorAuthenticatable;
+    use SoftDeletes;
 
     /**
      * The attributes that are mass assignable.
@@ -26,7 +28,16 @@ class User extends Authenticatable
      * @var string[]
      */
     protected $fillable = [
-        'name', 'email', 'password',
+        'name',
+        'email',
+        'password',
+        'apellidos',
+        'poblacion',
+        'provincia',
+        'cp',
+        'telefono',
+        'fechanacimiento',
+        'profile_photo_path'
     ];
 
     /**
@@ -58,4 +69,35 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function anuncios(){
+        return $this->hasMany(Anuncio::class);
+    }
+
+    /**
+     * RELATION WITH ROLES
+     *
+     */
+    public function roles(){
+        return $this->belongsToMany(Role::class, 'role_user');
+    }
+
+
+    public function ofertas(){
+        return $this->hasMany(Role::class);
+    }
+
+    /**
+     * METODO PARA CONMPROBAR SI EL USUARIO ES PROPIETARIO DE LA MOTO
+     */
+    public function isAnuncioOwner( Anuncio $anuncio ){
+        return $this->id == $anuncio->user_id;
+    }
+
+    /**
+     * METODO PARA CONMPROBAR SI EL USUARIO ES PROPIETARIO DE LA MOTO
+     */
+    public function isOfertaOwner( Oferta $oferta ){
+        return $this->id == $oferta->user_id;
+    }
 }
