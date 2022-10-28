@@ -4,9 +4,10 @@ use App\Models\Anuncio;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Artisan;
 use App\Http\Actions\DeleteUnusedImages;
-use App\Http\Controllers\AnuncioController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\AnuncioController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CategoriaController;
@@ -43,7 +44,7 @@ Route::middleware([
  * fallbackRoute
  */
  //****************** GRUPO DE RUTAS PARA AÑADIR ->middleware('guess') **********************************/
-Route::middleware('guess')->group(function(){
+Route::prefix('naturalmente')->group(function(){
     Route::match(['GET', 'POST'], '/anunciosearch', [AnuncioController::class, 'search'])->name('anuncio.search');
     // Route::resource('anuncio', AnuncioController::class);
     Route::get('/anuncio', [AnuncioController::class, 'index'])->name('anuncio.index');
@@ -80,15 +81,16 @@ Route::middleware('auth')->group( function(){
     Route::delete('/anunciopurge/{id}', [AnuncioController::class, 'purgeBike'])->name('anuncio.purge');
 
     Route::delete('/user/{user}', [UserController::class, 'destroy'])->name('user.destroy');
-    Route::get('/users', [UserController::class, 'index'])->name('users.list');
+
     // Route::get('/trashedUsers', [UserController::class, 'trashed'])->name('users.trashed');
     Route::get('/user/edit/{user}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('/user/edit/{user}', [UserController::class, 'update'])->name('user.update');
 
 });
 
- //****************** GRUPO DE RUTAS PARA AÑADIR ->middleware('auth) **********************************/
-Route::prefix('isAdmin')->middleware('auth, admin')->group( function(){
+ //****************** GRUPO DE RUTAS PARA AÑADIR ->middleware('isAdmin') **********************************/
+Route::prefix('admin')->group( function(){
+    Route::get('/users', [UserController::class, 'index'])->name('users.list');
     Route::get('/userRestore/{id}', [UserController::class, 'userRestore'])->name('user.restore');
     Route::delete('/userpurge/{id}', [UserController::class, 'purgeUser'])->name('user.purge');
     Route::get('/trashedUsers', [UserController::class, 'trashed'])->name('users.trashed');

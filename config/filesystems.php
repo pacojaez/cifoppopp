@@ -13,7 +13,12 @@ return [
     |
     */
 
-    'default' => env('FILESYSTEM_DISK', 'local'),
+    'default' => env('FILESYSTEM_DISK', 'public'),
+
+    /**
+     * RUTA POR DEFECTO PARA LAS IMAGENES DE MOTOS
+     */
+    'anunciosImageDir' => 'img/anuncios',
 
     /*
     |--------------------------------------------------------------------------

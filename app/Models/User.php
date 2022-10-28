@@ -100,4 +100,33 @@ class User extends Authenticatable implements MustVerifyEmail
     public function isOfertaOwner( Oferta $oferta ){
         return $this->id == $oferta->user_id;
     }
+
+    /**
+     * Method para comprobar si el usuario tiene un rol concreto dentro de un array
+     */
+    public function hasRoles( string|array $rolesNames ): bool
+    {
+        if(!is_array($rolesNames))
+            $rolesNames = [ $rolesNames];
+
+        foreach( $this->roles as $role){
+            if(in_array($role->role, $rolesNames) )
+            return TRUE;
+        }
+
+        return FALSE;
+    }
+
+    /**
+     * Roles not asigned to user
+     *
+     * @param User $user
+     * @return void
+     */
+    public function remainingRoles( ){
+
+        $roles = Role::all();
+        $userRoles = $this->roles;
+        return $roles->diff($userRoles);
+    }
 }
