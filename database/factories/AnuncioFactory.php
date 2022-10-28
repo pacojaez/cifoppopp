@@ -37,7 +37,8 @@ class AnuncioFactory extends Factory
             'precio' => $this->faker->numberBetween(20, 300),
             'image' => 'anuncio'.$this->faker->numberBetween(1, 37).'.jpg',
             'visitas' => $this->faker->numberBetween(100, 1100),
-            'user_id' => $this->faker->numberBetween(2,21)
+            'user_id' => $this->faker->numberBetween(2,21),
+            'categoria_id' => $this->faker->numberBetween(1,5)
 
         ];
     }

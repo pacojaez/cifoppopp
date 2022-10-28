@@ -21,6 +21,8 @@ class DatabaseSeeder extends Seeder
     {
         \App\Models\Anuncio::factory(200)->create();
 
+        \App\Models\Categoria::factory(5)->create();
+
         \App\Models\User::factory()->create([
             'name' => 'Admin',
             'apellidos' => 'Super Admin',
