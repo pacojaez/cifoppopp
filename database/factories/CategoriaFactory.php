@@ -32,7 +32,10 @@ class CategoriaFactory extends Factory
                 'Velas',
                 'Productos de la Huerta',
                 'Producto Fresco',
-                'Manufacturado'
+                'Manufacturado',
+                'Cosmeticos',
+                'ParaFarmacia',
+                'Artesania'
             ]),
             'descripcion' => $this->faker->sentence(8),
             'imagen' => 'anuncio'.$this->faker->numberBetween(1, 37).'.jpg',

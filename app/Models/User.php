@@ -79,7 +79,7 @@ class User extends Authenticatable implements MustVerifyEmail
      *
      */
     public function roles(){
-        return $this->belongsToMany(Role::class, 'role_user');
+        return $this->belongsToMany(Role::class);
     }
 
 
@@ -88,14 +88,14 @@ class User extends Authenticatable implements MustVerifyEmail
     }
 
     /**
-     * METODO PARA CONMPROBAR SI EL USUARIO ES PROPIETARIO DE LA MOTO
+     * METODO PARA COMPROBAR SI EL USUARIO ES PROPIETARIO DEL ANUNCIO
      */
     public function isAnuncioOwner( Anuncio $anuncio ){
         return $this->id == $anuncio->user_id;
     }
 
     /**
-     * METODO PARA CONMPROBAR SI EL USUARIO ES PROPIETARIO DE LA MOTO
+     * METODO PARA CONMPROBAR SI EL USUARIO ES PROPIETARIO DE LA OFERTA
      */
     public function isOfertaOwner( Oferta $oferta ){
         return $this->id == $oferta->user_id;

@@ -21,7 +21,9 @@ class Anuncio extends Model
         'descripcion',
         'precio',
         'image',
-        'visitas'
+        'visitas',
+        'user_id',
+        'categoria_id'
     ];
 
     public function user(){

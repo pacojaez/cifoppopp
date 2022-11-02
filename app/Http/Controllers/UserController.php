@@ -27,6 +27,26 @@ class UserController
         ]);
     }
 
+    //
+    public function show( Request $request ){
+
+        $user = User::find($request->user());
+
+        return view('users.profile', [
+            'user' => $user
+        ]);
+    }
+
+    public function profile( Request $request ){
+
+        $user = User::firstOrFail('id', 'like', Auth::user()->id)->with('anuncios')->get();
+        dd($user);
+        // $user->with('anuncios')->with('ofertas')->get();
+        return view('users.profile', [
+            'user'=>$user,
+        ]);
+    }
+
     public function edit( Request $request, User $user )
     {
         // Método que solo comprueba si la moto pertenece al usuario:
@@ -34,7 +54,12 @@ class UserController
         //     return view('errors.403');
 
         //Autorización con Policies:
-        if(Auth::user()->cant('update', $user))
+        $userA = $request->user();
+
+        if($userA->cant('update', $user))
+                return view('errors.403');
+
+        if( Auth::user()->cant('update', $user))
                 return view('errors.403');
 
         $roles = Role::all();

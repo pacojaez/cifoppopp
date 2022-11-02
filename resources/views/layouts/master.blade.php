@@ -60,21 +60,25 @@
     {{-- <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script> --}}
     {{-- <script src="https://unpkg.com/alpinejs" defer></script> --}}
     {{-- <script defer src="https://unpkg.com/alpinejs@3.8.1/dist/cdn.min.js"></script> --}}
+    @livewireStyles
 
 </head>
 
 <body class="overflow-x-hidden">
-    @include('components.navbar')
+    @include('components.navbar2')
+    {{-- @include('navigation-menu') --}}
 
     @includeWhen(Session::has('success'), 'layouts.success')
     @includeWhen($errors->any(), 'layouts.error')
     <main class="flex flex-col items-center justify-center w-full mt-2">
-        <x-alert />
+        {{-- <x-alert /> --}}
 
         @yield('contenido')
 
     </main>
     @include('components.footer')
+
+    @stack('scripts')
 
     <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
     <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/colored-shadow.js"></script>

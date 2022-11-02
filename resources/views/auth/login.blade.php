@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('titulo', 'Login en Larabikes')
+@section('titulo', 'Login en Cifoppopp')
 
 @section('contenido')
     <x-jet-authentication-card>

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('titulo', 'Login en CifoPpopP')
+@section('titulo', 'Anuncios de CifoPpopP')
 
 @section('contenido')
     <section class="w-full p-10 m-10 text-gray-600 body-font">
@@ -26,15 +26,18 @@
 
                         <!--public\storage\img\anuncios\1.jpg -->
                         <img class="object-cover object-center w-full lg:h-48 md:h-36"
-                            src="{{ asset('storage/img/anuncios/'. $anuncio->image) }}"
+                            src="{{ asset('/storage/img/anuncios/'. $anuncio->image) }}"
                             {{-- src="{{ asset('storage/' . config('filesystems.anunciosImageDir') . '/' . $anuncio->image) }}" --}}
+                            {{-- src="{{asset('/storage/img/anuncios/1.jpg')}}" --}}
+
+
                             alt="{{ $anuncio->titulo }}" />
 
                         <div class="p-4">
                             <h2 class="p-2 m-2 mb-1 text-xs font-bold tracking-widest text-gray-800 uppercase bg-blue-200 rounded-lg p2 title-font">CATEGORIA:{{ $anuncio->categoria->nombre }}</h2>
                             <h1 class="mb-3 text-lg font-medium text-gray-900 title-font">{{ $anuncio->descripcion }}</h1>
                             <div class="flex flex-wrap items-center ">
-                                <a href="/" class="p-2 m-2 text-gray-800 uppercase bg-green-300 rounded-lg md:mb-2 lg:mb-0">
+                                <a href="{{ route('anuncio.show', ['anuncio' => $anuncio])}}" class="p-2 m-2 text-gray-800 uppercase bg-green-300 rounded-lg md:mb-2 lg:mb-0">
                                     <p class="inline-flex items-center">VER
                                         <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                             fill="none" stroke-linecap="round" stroke-linejoin="round">

@@ -35,7 +35,7 @@ class AnuncioFactory extends Factory
             ]),
             'descripcion' => $this->faker->sentence(8),
             'precio' => $this->faker->numberBetween(20, 300),
-            'image' => 'anuncio'.$this->faker->numberBetween(1, 37).'.jpg',
+            'image' => $this->faker->numberBetween(1, 37).'.jpg',
             'visitas' => $this->faker->numberBetween(100, 1100),
             'user_id' => $this->faker->numberBetween(2,21),
             'categoria_id' => $this->faker->numberBetween(1,5)
