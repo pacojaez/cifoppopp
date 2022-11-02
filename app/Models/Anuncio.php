@@ -23,7 +23,8 @@ class Anuncio extends Model
         'image',
         'visitas',
         'user_id',
-        'categoria_id'
+        'categoria_id',
+        'vendido'
     ];
 
     public function user(){

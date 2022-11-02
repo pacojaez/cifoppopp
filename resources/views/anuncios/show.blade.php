@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('titulo', 'Detalle de la moto ')
+@section('titulo', 'Detalle del Anuncio {{ $anuncio->titulo }} ')
 
 @section('contenido')
     <div class="p-4 md:w-1/3">
@@ -51,59 +51,59 @@
 
                 </div>
             </div>
-            <div class="p-4">
-                <a href="{{ route('oferta.create', ['anuncio'=> $anuncio ])}}" class="p-2 m-2 font-boldrounded-lg md:mb-2 lg:mb-0">
-                    {{-- <input type="hidden" name="_method" value="DELETE"> --}}
-                    <div class="flex justify-center mt-6">
-                        <p type="submit"
-                            class="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-500 rounded-md dark:bg-red-600 dark:hover:bg-red-700 dark:focus:bg-red-700 hover:bg-red-600 focus:outline-none focus:bg-red-500 focus:ring focus:ring-red-300 focus:ring-opacity-50">
-                            HACER OFERTA
-                        </p>
-                    </div>
-                </a>
-            </div>
+            @can('createOffer', $anuncio )
+                <div class="p-4">
+                    <a href="{{ route('oferta.create', ['anuncio'=> $anuncio ])}}" class="p-2 m-2 font-boldrounded-lg md:mb-2 lg:mb-0">
+                        {{-- <input type="hidden" name="_method" value="DELETE"> --}}
+                        <div class="flex justify-center mt-6">
+                            <p type="submit"
+                                class="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-500 rounded-md dark:bg-red-600 dark:hover:bg-red-700 dark:focus:bg-red-700 hover:bg-red-600 focus:outline-none focus:bg-red-500 focus:ring focus:ring-red-300 focus:ring-opacity-50">
+                                HACER OFERTA
+                            </p>
+                        </div>
+                    </a>
+                </div>
+            @endcan
         </div>
-        <div class="p-4">
-            <h2
-                class="p-2 m-2 mb-1 text-xs font-bold tracking-widest text-gray-800 uppercase bg-blue-200 rounded-lg p2 title-font">
-                OFERTAS
-            </h2>
-            @foreach ($ofertas as $oferta)
-                <div class="flex flex-col flex-wrap items-center p-2 m-2 shadow-md">
-                    <h3 class="mb-3 text-lg font-medium text-gray-900 title-font">Oferta de: {{ $oferta->user->name }}</h3>
-                    <h3 class="mb-3 text-lg font-medium text-gray-900 title-font">COMENTARIO: {{ $oferta->texto }}</h3>
-                    <h5 class="mb-3 text-xs font-bold text-gray-900 title-font">OFERTA REALIZADA EL : {{ $oferta->created_at->toDateString() }}</h5>
-                    <div class="flex flex-row flex-wrap items-center p-2 m-2">
-                        <form action="{{ route('oferta.accepted', ['oferta' => $oferta ])}}" method="post">
-                            @csrf
-                            <button type="submit" class="p-2 m-2 font-bold text-gray-800 bg-green-300 rounded-lg md:mb-2 lg:mb-0">
-                                <p class="inline-flex items-center">ACEPTAR {{ $oferta->importe }} €
+        @can('viewOffers', $anuncio )
+            <div class="p-4">
+                <h2
+                    class="p-2 m-2 mb-1 text-xs font-bold tracking-widest text-gray-800 uppercase bg-blue-200 rounded-lg p2 title-font">
+                    OFERTAS
+                </h2>
+                @foreach ($ofertas as $oferta)
+                    <div class="flex flex-col flex-wrap items-center p-2 m-2 shadow-md">
+                        <h3 class="mb-3 text-lg font-medium text-gray-900 title-font">Oferta de: {{ $oferta->user->name }}</h3>
+                        <h3 class="mb-3 text-lg font-medium text-gray-900 title-font">COMENTARIO: {{ $oferta->texto }}</h3>
+                        <h5 class="mb-3 text-xs font-bold text-gray-900 title-font">OFERTA REALIZADA EL : {{ $oferta->created_at->toDateString() }}</h5>
+                        <div class="flex flex-row flex-wrap items-center p-2 m-2">
+                            <form action="{{ route('oferta.accepted', ['oferta' => $oferta ])}}" method="post">
+                                @csrf
+                                <button type="submit" class="p-2 m-2 font-bold text-gray-800 bg-green-300 rounded-lg md:mb-2 lg:mb-0">
+                                    <p class="inline-flex items-center">ACEPTAR {{ $oferta->importe }} €
+                                        <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M5 12h14"></path>
+                                            <path d="M12 5l7 7-7 7"></path>
+                                        </svg>
+                                    </p>
+                                </button>
+                            </form>
+                            <a href="/" class="p-2 m-2 font-bold text-gray-800 bg-red-300 rounded-lg md:mb-2 lg:mb-0">
+                                <p class="inline-flex items-center text-sm">RECHAZAR {{ $oferta->importe }} €
                                     <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                         fill="none" stroke-linecap="round" stroke-linejoin="round">
                                         <path d="M5 12h14"></path>
                                         <path d="M12 5l7 7-7 7"></path>
                                     </svg>
                                 </p>
-                            </button>
-                        </form>
-                        <a href="/" class="p-2 m-2 font-bold text-gray-800 bg-red-300 rounded-lg md:mb-2 lg:mb-0">
-                            <p class="inline-flex items-center text-sm">RECHAZAR {{ $oferta->importe }} €
-                                <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
-                                    fill="none" stroke-linecap="round" stroke-linejoin="round">
-                                    <path d="M5 12h14"></path>
-                                    <path d="M12 5l7 7-7 7"></path>
-                                </svg>
-                            </p>
-                        </a>
-
+                            </a>
+                        </div>
                     </div>
-
-
-                </div>
-                <hr>
-                <hr>
-            @endforeach
-
-        </div>
+                    <hr>
+                    <hr>
+                @endforeach
+            </div>
+        @endcan
     </div>
 @endsection

@@ -20,9 +20,20 @@ class AnuncioPolicy
         return TRUE;
     }
 
+    public function viewOffers(User $user, Anuncio $anuncio)
+    {
+        return $user->isAnuncioOwner( $anuncio )||
+        $user->hasRoles(['ADMINISTRADOR', 'EDITOR']);
+    }
+
     public function create(User $user)
     {
         return $user->hasVerifiedEmail();
+    }
+
+    public function createOffer(User $user, Anuncio $anuncio )
+    {
+        return !$user->isAnuncioOwner( $anuncio );
     }
 
     public function update( User $user, Anuncio $anuncio )

@@ -27,7 +27,7 @@ class AnuncioFactory extends Factory
                 'Champu arbol de te',
                 'Jabon de manos de lavanda',
                 'Duplo gel',
-                'gua-sha',
+                'Gua-Sha',
                 'Cepillo de dientes de bambu',
                 'Jabón de alepo',
                 'Crema de sal',
@@ -38,7 +38,8 @@ class AnuncioFactory extends Factory
             'image' => $this->faker->numberBetween(1, 37).'.jpg',
             'visitas' => $this->faker->numberBetween(100, 1100),
             'user_id' => $this->faker->numberBetween(2,21),
-            'categoria_id' => $this->faker->numberBetween(1,5)
+            'categoria_id' => $this->faker->numberBetween(1,5),
+            'vendido' => $this->faker->boolean(),
 
         ];
     }

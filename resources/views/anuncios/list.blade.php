@@ -46,6 +46,7 @@
                                         </svg>
                                     </p>
                                 </a>
+                                @can('createOffer', $anuncio )
                                 <a href="/" class="p-2 m-2 font-bold text-gray-800 bg-red-300 rounded-lg md:mb-2 lg:mb-0">
                                     <p class="inline-flex items-center">COMPRA YA!!
                                         <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
@@ -55,7 +56,7 @@
                                         </svg>
                                     </p>
                                 </a>
-
+                                @endcan
                             </div>
                             <div class="flex flex-wrap items-center ">
                                 <span
