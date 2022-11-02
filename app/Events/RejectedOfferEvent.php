@@ -14,16 +14,21 @@ class RejectedOfferEvent
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
+    public $user;
+    public $anuncio;
+    public $oferta;
+
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct( $anuncio, $user, $oferta )
     {
-        //
+        $this->anuncio = $anuncio;
+        $this->user = $user;
+        $this->oferta = $oferta;
     }
-
     /**
      * Get the channels the event should broadcast on.
      *

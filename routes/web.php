@@ -94,6 +94,7 @@ Route::middleware('auth')->group( function(){
     Route::get('/oferta/create/{anuncio}', [OfertaController::class, 'create'])->name('oferta.create');
     Route::post('/oferta/{anuncio}', [OfertaController::class, 'store'])->name('oferta.store');
     Route::get('/misofertas', [OfertaController::class, 'list'])->name('oferta.list');
+    Route::get('/oferta/rejected/{oferta}', [OfertaController::class, 'rejected'])->name('oferta.rejected');
 
 
 });

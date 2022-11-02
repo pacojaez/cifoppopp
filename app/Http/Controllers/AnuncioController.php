@@ -100,7 +100,9 @@ class AnuncioController extends Controller
         if( $anuncio->visitas == 1000 ){
             // OneThousandVisits::dispatch(  $anuncio );
         }
-        $ofertas = Oferta::where('anuncio_id', $anuncio->id )->orderBy('importe', 'DESC')->get();
+        $ofertas = Oferta::where('anuncio_id', $anuncio->id )->where('rejected', FALSE)->orderBy('importe', 'DESC')->get();
+
+        $ofertasRechazadas = Oferta::where('anuncio_id', $anuncio->id )->where('rejected', TRUE)->orderBy('importe', 'DESC')->get();
         // $anuncios = Anuncio::orderBy('id', 'ASC')->paginate(12);
         $totalOfertas = count($ofertas);
         // $anuncio = Anuncio::find($anuncio)->withCount('ofertas')->orderBy('ofertas_count', 'DESC')->all();
@@ -108,7 +110,8 @@ class AnuncioController extends Controller
         return view('anuncios.show', [
             'anuncio'=>$anuncio,
             'totalOfertas' => $totalOfertas,
-            'ofertas' => $ofertas
+            'ofertas' => $ofertas,
+            'ofertasRechazadas' => $ofertasRechazadas
         ]);
     }
 

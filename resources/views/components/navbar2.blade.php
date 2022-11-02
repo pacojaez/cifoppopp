@@ -31,7 +31,7 @@
                 </ul>
             </nav>
         </div>
-        <div class="order-3 hidden w-full md:flex md:items-center md:w-auto md:order-1" id="menu">
+        <div class="z-10 order-3 hidden w-full shadow-lg md:flex md:items-center md:w-auto md:order-1 bg-slate-400" id="menu">
             @auth
         <x-login-drop-down>
             <li class="px-3 py-1 rounded-sm hover:bg-gray-100">

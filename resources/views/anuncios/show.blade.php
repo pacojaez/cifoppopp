@@ -18,10 +18,24 @@
                 </div>
             </div>
 
-            <!--public\storage\img\anuncios\1.jpg -->
+            @if ($anuncio->vendido)
+            <!-- SOLD OUT Card -->
+            <div class="object-cover object-center w-full p-3 antialiased bg-gray-600 rounded-lg shadow-lg lg:h-48 md:h-36"
+                style="
+                    background-image:url({{ url('') . '/storage/img/anuncios/' . $anuncio->image }});
+                    background-repeat: no-repat;
+                    background-size: cover;
+                    background-blend-mode: multiply;
+                ">
+                <img class="antialiased rounded-lg shadow-lg"
+                    src="{{ asset('/img/components/sold-out.png') }}">
+            </div>
+            <!-- End SOLD OUT Card -->
+        @else
             <img class="object-cover object-center w-full lg:h-48 md:h-36"
-                src="{{ asset('/storage/img/anuncios/' . $anuncio->image) }}" {{-- src="{{ asset('storage/' . config('filesystems.anunciosImageDir') . '/' . $anuncio->image) }}" --}} {{-- src="{{asset('/storage/img/anuncios/1.jpg')}}" --}}
+                src="{{ asset('/storage/img/anuncios/' . $anuncio->image) }}"
                 alt="{{ $anuncio->titulo }}" />
+        @endif
 
             <div class="p-4">
                 <h2
@@ -69,7 +83,7 @@
             <div class="p-4">
                 <h2
                     class="p-2 m-2 mb-1 text-xs font-bold tracking-widest text-gray-800 uppercase bg-blue-200 rounded-lg p2 title-font">
-                    OFERTAS
+                    OFERTAS ACTIVAS
                 </h2>
                 @foreach ($ofertas as $oferta)
                     <div class="flex flex-col flex-wrap items-center p-2 m-2 shadow-md">
@@ -89,7 +103,7 @@
                                     </p>
                                 </button>
                             </form>
-                            <a href="/" class="p-2 m-2 font-bold text-gray-800 bg-red-300 rounded-lg md:mb-2 lg:mb-0">
+                            <a href="{{ route('oferta.rejected', ['oferta' => $oferta ])}}" class="p-2 m-2 font-bold text-gray-800 bg-red-300 rounded-lg md:mb-2 lg:mb-0">
                                 <p class="inline-flex items-center text-sm">RECHAZAR {{ $oferta->importe }} €
                                     <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
                                         fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -98,6 +112,44 @@
                                     </svg>
                                 </p>
                             </a>
+                        </div>
+                    </div>
+                    <hr>
+                    <hr>
+                @endforeach
+            </div>
+            <div class="p-4 bg-slate-400">
+                <h2
+                    class="p-2 m-2 mb-1 text-xs font-bold tracking-widest text-red-800 uppercase bg-blue-200 rounded-lg p2 title-font">
+                    OFERTAS RECHAZADAS
+                </h2>
+                @foreach ($ofertasRechazadas as $oferta)
+                    <div class="flex flex-col flex-wrap items-center p-2 m-2 shadow-md">
+                        <h3 class="mb-3 text-lg font-medium text-red-900 title-font">Oferta de: {{ $oferta->user->name }}</h3>
+                        <h3 class="mb-3 text-lg font-medium text-red-900 title-font">COMENTARIO: {{ $oferta->texto }}</h3>
+                        <h5 class="mb-3 text-xs font-bold text-red-900 title-font">OFERTA REALIZADA EL : {{ $oferta->created_at->toDateString() }}</h5>
+                        <div class="flex flex-row flex-wrap items-center p-2 m-2">
+                            <form action="{{ route('oferta.accepted', ['oferta' => $oferta ])}}" method="post">
+                                @csrf
+                                <button type="submit" class="p-2 m-2 font-bold text-gray-300 bg-gray-600 rounded-lg md:mb-2 lg:mb-0">
+                                    <p class="inline-flex items-center">ACEPTAR {{ $oferta->importe }} €
+                                        <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                            fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M5 12h14"></path>
+                                            <path d="M12 5l7 7-7 7"></path>
+                                        </svg>
+                                    </p>
+                                </button>
+                            </form>
+                            {{-- <a href="{{ route('oferta.rejected', ['oferta' => $oferta ])}}" class="p-2 m-2 font-bold text-gray-800 bg-red-300 rounded-lg md:mb-2 lg:mb-0">
+                                <p class="inline-flex items-center text-sm">RECHAZAR {{ $oferta->importe }} €
+                                    <svg class="w-4 h-4 ml-2" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"
+                                        fill="none" stroke-linecap="round" stroke-linejoin="round">
+                                        <path d="M5 12h14"></path>
+                                        <path d="M12 5l7 7-7 7"></path>
+                                    </svg>
+                                </p>
+                            </a> --}}
                         </div>
                     </div>
                     <hr>

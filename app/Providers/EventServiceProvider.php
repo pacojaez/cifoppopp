@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Events\AddedOfertaEvent;
+use App\Events\RejectedOfferEvent;
+use App\Listeners\SendNewOfferNotification;
+use App\Listeners\SendRejectedOfferMessage;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Auth\Listeners\SendEmailVerificationNotification;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
@@ -17,6 +21,12 @@ class EventServiceProvider extends ServiceProvider
     protected $listen = [
         Registered::class => [
             SendEmailVerificationNotification::class,
+        ],
+        AddedOfertaEvent::class => [
+            SendNewOfferNotification::class,
+        ],
+        RejectedOfferEvent::class => [
+            SendRejectedOfferMessage::class,
         ],
     ];
 

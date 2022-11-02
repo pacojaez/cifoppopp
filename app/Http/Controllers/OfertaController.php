@@ -82,9 +82,10 @@ class OfertaController extends Controller
     }
 
     public function accepted( Request $request, Oferta $oferta ){
-        // dd($oferta);
+
         $anuncio = Anuncio::where('id', $oferta->anuncio_id)->first();
-        $collect = $anuncio->ofertas;
+        $collect = $anuncio->ofertas->where('rejected', FALSE);
+        // dd($collect);
         //Sacamos de la collection la oferta aceptada
         $rejected = $collect->filter(function ($value, $key) use ( $oferta ) {
             return data_get( $value, 'id') != $oferta->id;
@@ -94,11 +95,48 @@ class OfertaController extends Controller
         foreach( $rejected as $oferta){
             //mandar un mail a cada usuario de la oferta rechazada
             //crear un ecçvento OfertaRechazadaEvent
-            RejectedOfferEvent::dispatch( $oferta->user, $oferta );
-            $oferta->delete();
+            RejectedOfferEvent::dispatch( $oferta->user, $anuncio, $oferta );
+            $oferta->rejected = TRUE;
+            $oferta->save();
         }
 
         //poner el anuncio como VENDIDO
+        $anuncio->vendido = TRUE;
+        $anuncio->save();
+
+        return redirect()->route('anuncio.show', [
+            'anuncio' => $anuncio
+            ])
+        ->with('success' , "El anuncio $anuncio->titulo del usuario ha recibido la oferta correctamente");
+    }
+
+    public function rejected( Request $request, Oferta $oferta ){
+        // dd($oferta);
+        $anuncio = Anuncio::where('id', $oferta->anuncio_id)->first();
+
+        // $collect = $anuncio->ofertas;
+        //Sacamos de la collection la oferta aceptada
+        // $rejected = $collect->filter(function ($value, $key) use ( $oferta ) {
+        //     return data_get( $value, 'id') != $oferta->id;
+        // });
+        $oferta->rejected = TRUE;
+        $oferta->save();
+
+        // $rejected = $rejected->all();
+        // foreach( $rejected as $oferta){
+            //mandar un mail a cada usuario de la oferta rechazada
+            //crear un ecçvento OfertaRechazadaEvent
+            RejectedOfferEvent::dispatch( $anuncio, $oferta->user, $oferta );
+            // $oferta->delete();
+        // }
+
+        //poner el anuncio como VENDIDO
+
+
+        return redirect()->route('anuncio.show', [
+            'anuncio' => $anuncio
+            ])
+        ->with('success' , "El anuncio $anuncio->titulo del usuario ha recibido la oferta correctamente");
     }
 
     public function list(){

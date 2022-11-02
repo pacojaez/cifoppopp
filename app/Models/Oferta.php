@@ -17,7 +17,8 @@ class Oferta extends Model
     protected $fillable = [
         'texto',
         'vigencia',
-        'importe'
+        'importe',
+        'rejected'
     ];
 
     public function user(){
