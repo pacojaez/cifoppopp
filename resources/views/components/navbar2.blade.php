@@ -78,27 +78,27 @@
                 </a>
             </li>
             @can('view', Auth::user())
-                <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                    {{-- <a class="nav-link" href="{{ route('userTrashedBikes', ['user' => Auth::user()]) }}"> --}}
-                        {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
-                        {{-- <span class="{{ $pagina == 'userTrashedBikes' ? 'underline font-bold' : '' }}">MOTOS --}}
-                            {{-- BORRADAS</span> --}}
-                    {{-- </a> --}}
-                </li>
-                <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                    {{-- <a class="nav-link" href="{{ route('users.list') }}"> --}}
-                        {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
-                        {{-- <span class="{{ $pagina == 'users.list' ? 'underline font-bold' : '' }}">USUARIOS</span> --}}
-                    {{-- </a> --}}
-                </li>
-                <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                    {{-- <a class="nav-link" href="{{ route('users.trashed') }}"> --}}
-                        {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
-                        {{-- <span class="{{ $pagina == 'users.trashed' ? 'underline font-bold' : '' }}">USUARIOS DADOS --}}
-                            {{-- DE BAJA</span> --}}
-                    {{-- </a> --}}
-                </li>
-            @endcan
+            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                <a class="nav-link" href="{{ route('userTrashedAnuncios', ['user' => Auth::user()]) }}">
+                    {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
+                    <span class="{{ $pagina == 'userTrashedBikes' ? 'underline font-bold' : '' }}">MOTOS
+                        BORRADAS</span>
+                </a>
+            </li>
+            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                <a class="nav-link" href="{{ route('users.list') }}">
+                    {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
+                    <span class="{{ $pagina == 'users.list' ? 'underline font-bold' : '' }}">USUARIOS</span>
+                </a>
+            </li>
+            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                <a class="nav-link" href="{{ route('users.trashed') }}">
+                    {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
+                    <span class="{{ $pagina == 'users.trashed' ? 'underline font-bold' : '' }}">USUARIOS DADOS
+                        DE BAJA</span>
+                </a>
+            </li>
+        @endcan
         </x-login-drop-down>
         @else
         <div class="flex flex-wrap items-center justify-end order-2 mr-0 md:order-3 md:mr-4" id="nav-content">
