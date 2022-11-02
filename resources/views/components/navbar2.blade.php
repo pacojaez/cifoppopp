@@ -71,6 +71,12 @@
                     <span class="{{ $pagina == 'anuncios.trashed' ? 'underline font-bold' : '' }}">ANUNCIOS ELIMINADOS</span>
                 </a>
             </li>
+            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                <a class="nav-link" href="{{ route('oferta.list' ) }}">
+                    <i class="mr-2 text-base material-icons opacity-60"></i>
+                    <span class="{{ $pagina == 'ofertas.misofertas' ? 'underline font-bold' : '' }}">MIS OFERTAS</span>
+                </a>
+            </li>
             @can('view', Auth::user())
                 <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
                     {{-- <a class="nav-link" href="{{ route('userTrashedBikes', ['user' => Auth::user()]) }}"> --}}

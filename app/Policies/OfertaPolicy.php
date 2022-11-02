@@ -5,6 +5,7 @@ namespace App\Policies;
 use App\Models\User;
 use App\Models\Oferta;
 use App\Models\Anuncio;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Auth\Access\HandlesAuthorization;
 
 class OfertaPolicy
@@ -28,6 +29,13 @@ class OfertaPolicy
     }
 
     public function delete(User $user, Oferta $oferta)
+    {
+       return $user->isOfertaOwner( $oferta)||
+       $user->hasRoles(['ADMINISTRADOR', 'EDITOR']);
+    //    return TRUE;
+    }
+
+    public function update ( Oferta $oferta , User $user)
     {
        return $user->isOfertaOwner( $oferta)||
        $user->hasRoles(['ADMINISTRADOR', 'EDITOR']);

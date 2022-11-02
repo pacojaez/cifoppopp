@@ -5,22 +5,25 @@ namespace App\Http\Controllers;
 use App\Models\Oferta;
 use App\Models\Anuncio;
 use Illuminate\Http\Request;
+use App\Events\AddedOfertaEvent;
 use App\Events\RejectedOfferEvent;
 use App\Events\DeletedAnuncioEvent;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\OfertaStoreRequest;
 
 class OfertaController extends Controller
 {
 
-    public function destroy( Oferta $oferta )
+    public function destroy( Request $request )
     {
         // METODO PARA COMPROBAR EN EL CONTROLADOR SI LA RUTA ESTÁ CORRCETAMENTE FIRMADA
         // si usamos el middleware 'signed' en la ruta ya no hace falta pasarle al controlador la request
         // if( !$request->hasValidSignature() )
         //     abort(403, 'No estas autorizado a borrar esa moto');
 
+        $oferta = Oferta::where('id', $request->input('id'))->first();
         //Autorizacion con Policies:
-        // if( !Auth::user()->can('delete', $user) )
+        // if( Auth::user()->cant('delete', $oferta) )
         //     return view('errors.403');
 
         //USANDO UNA GATE PARA IMPEDIR EL BORRADO DE MOTOS POR USUARIOS QUE NO PUEDEN ACCEDER AL RECURSO
@@ -32,13 +35,10 @@ class OfertaController extends Controller
 
         $oferta->delete();
 
-        // $bikes = $user->bikes;
-        // foreach ($bikes as $bike){
-        //     $bike->delete();
-        // }
-
-        return redirect()->route('anuncio.misanuncios')
-                ->with('success' , "Oferta retirada correctamente");
+        // return redirect()->route('anuncio.misanuncios')
+        //         ->with('success' , "Oferta retirada correctamente");
+        return redirect()->back()
+                ->with('success' , "La oferta se ha retirado correctamente");
     }
 
     public function create( Anuncio $anuncio){
@@ -48,53 +48,37 @@ class OfertaController extends Controller
         ]);
     }
 
-    public function store( Request $request, Anuncio $anuncio)
+    public function store( OfertaStoreRequest $request, Anuncio $anuncio)
     {
-        // if( !Auth::check() )
-        //     return view('errors.403');
 
-        // if( $request->hasFile('image') ){
-        //     $savePhoto = BikePhotoUploadService::store($request);
-        //     $datos = $request->except('image');
-        //     $datos += ['image' => $savePhoto];
+        if( !Auth::check() )
+            return view('errors.403');
 
-        //     if( $request->input('matricula')){
-        //         $datos += ['matriculada' => TRUE];
-        //     }
-        //     $datos += ['user_id' => Auth::id() ];
-        //     $oferta = Oferta::create( $datos );
+        if( Oferta::where('user_id', 'like', Auth::id())->where('anuncio_id', 'like', $anuncio->id))
+            return redirect()->route('anuncio.show', $anuncio)
+                ->with('success' , "Ya tienes una oferta realizada a este anuncio");
 
-        //     if( $request->user()->first_bike_created == 0  ){
-        //         FirstBikeCreated::dispatch( $bike, $request->user());
-        //         $request->user()->first_bike_created = 1;
-        //         $request->user()->save();
-        //     }
+        $newOffer = new Oferta();
 
-        // }else{
-        //     $datos = $request->except('image');
-        //     $datos += ['image' => 'noimage.png' ];
-        //     if( $request->input('matricula')){
-        //         $datos += ['matriculada' => TRUE];
-        //     }
+        $newOffer->texto = $request->input('texto');
+        $newOffer->importe = $request->input('importe');
+        $newOffer->vigencia = $request->input('vigencia');
+        $newOffer->user_id = Auth::id();
+        $newOffer->anuncio_id = $anuncio->id;
+        $usermail = $anuncio->user->email;
 
-        //     $datos += ['user_id' => Auth::id() ];
-        //     $bike = Bike::create( $datos );
+        if($newOffer->save()){
+            // dd($anuncio->user->email);
+            AddedOfertaEvent::dispatch( $anuncio, $anuncio->user, $newOffer );
 
-        //     if( $request->user()->first_bike_created == 0  ){
-        //         FirstBikeCreated::dispatch( $bike, $request->user());
-        //         $request->user()->first_bike_created = 1;
-        //         $request->user()->save();
-        //     }
-        // }
-        // $userMaxBikes = User::with('bikes')->get()->max('bikes');
+            return redirect()->route('anuncio.show', $anuncio)
+                ->with('success' , "El anuncio $anuncio->titulo del usuario $usermail ha recibido la oferta correctamente");
+        }else{
+            return redirect()->route('anuncio.show', $anuncio)
+            ->with('error' , "El anuncio $anuncio->titulo no ha podido recibir la oferta correctamente");
+        }
 
-        // if( $userMaxBikes->value('user_id') == $bike->user->id ){
-        //     MoreBikes::dispatch( $bike );
-        // }
 
-        // return redirect()->route('bike.show', $bike)
-        //     ->with('success' , "Moto $bike->marca $bike->modelo guardada correctamente")
-        //     ->cookie('lastInsertId', $bike->id, 0);
     }
 
     public function accepted( Request $request, Oferta $oferta ){
@@ -115,5 +99,14 @@ class OfertaController extends Controller
         }
 
         //poner el anuncio como VENDIDO
+    }
+
+    public function list(){
+
+        $ofertas = Oferta::where('user_id', Auth::id())->get();
+
+        return view('ofertas.list', [
+            'ofertas' => $ofertas
+        ]);
     }
 }

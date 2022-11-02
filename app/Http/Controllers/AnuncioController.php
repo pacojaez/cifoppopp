@@ -200,11 +200,6 @@ class AnuncioController extends Controller
                 'mensaje' => "Estás intentando acceder a un recurso al que no tienes acceso"
             ]);
 
-            // logica para mandar mail de felicitacion por tener mil visitas
-    // if( $anuncio->visitas == 1000 ){
-    //     OneThousandVisits::dispatch(  $anuncio );
-    // }
-
         return view('anuncios.delete', ['anuncio'=>$anuncio]);
     }
 

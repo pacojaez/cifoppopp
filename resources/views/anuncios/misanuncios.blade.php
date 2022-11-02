@@ -92,9 +92,10 @@
                 <!--End here-->
             </div>
         </div>
-        <h2>MIS OFERTAS ACTIVAS</h2>
-        {{ $ofertas->links() }}
-        <div class="container px-5 py-5 mx-auto">
+        {{-- <h2>MIS OFERTAS ACTIVAS</h2> --}}
+
+        {{-- {{ $ofertas->links() }} --}}
+        {{-- <div class="container px-5 py-5 mx-auto">
             <div class="flex flex-wrap -m-4">
                 <!--Start Here -->
                 @foreach ($ofertas as $oferta )
@@ -130,7 +131,7 @@
                                             <path d="M12 5l7 7-7 7"></path>
                                         </svg>
                                     </p>
-                                </a> --}}
+                                </a>
                                 <form class="mt-2" action="{{ route('oferta.destroy', ['id' => $oferta->id]) }}" method="POST">                                  @csrf
                                     <input type="hidden" name="_method" value="DELETE">
                                     <div class="flex justify-center mt-6">
@@ -159,6 +160,6 @@
 
                 <!--End here-->
             </div>
-        </div>
+        </div> --}}
     </section>
 @endsection

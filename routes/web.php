@@ -92,6 +92,9 @@ Route::middleware('auth')->group( function(){
     Route::delete('/ofertadestroy/{id}', [OfertaController::class, 'destroy'])->name('oferta.destroy');
     Route::post('/oferta/accepted/{oferta}', [OfertaController::class, 'accepted'])->name('oferta.accepted');
     Route::get('/oferta/create/{anuncio}', [OfertaController::class, 'create'])->name('oferta.create');
+    Route::post('/oferta/{anuncio}', [OfertaController::class, 'store'])->name('oferta.store');
+    Route::get('/misofertas', [OfertaController::class, 'list'])->name('oferta.list');
+
 
 });
 

@@ -33,11 +33,13 @@ class SendDeletedAnuncioMessage
         $mensaje->asunto = "¡UN ANUNCIO POR EL QUE TENÍAS UNA OFERTA SE HA BORRADO!";
         $mensaje->email = $event->anuncio->oferta->user->email;
         $mensaje->nombre = $event->anuncio->oferta->user->name;
+        $titulo = $event->anuncio->titulo;
+        $importe = $event->oferta->importe;
 
-        $mensaje->mensaje = `El anuncio $event->anuncio por el que tenías una oferta de $event->oferta->importe € ha sido retirado. El propietario del anuncio lo ha dado de baja
+        $mensaje->mensaje = `El anuncio $titulo por el que tenías una oferta de $importe € ha sido retirado. El propietario del anuncio lo ha dado de baja
                             bien porque ha aceptado otra oferta o bien porque ha retirado el anuncio`;
 
-        Mail::to( $event->bike->user->email)->send(new Warning($mensaje));
+        Mail::to( $event->oferta->user->email )->send(new Warning($mensaje));
     }
 
 }
