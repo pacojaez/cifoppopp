@@ -206,9 +206,13 @@ class UserController
 
         return back()
                 // ->with('success' , "Usuario $user->name y todas sus motos borradas definitivamente");
-                ->with('success' , "TODO: ELIMINAR SUS MOTOS Y LAS FOTOS DE SUS MOTOS PERMANENTEMENTE");
+                ->with('success' , "TODO: ELIMINAR SUS ANUNCIOS Y LAS FOTOS DE SUS MOTOS PERMANENTEMENTE");
 
 
+    }
+
+    public function dashboard(){
+        return view('layouts.admin');
     }
 
 }

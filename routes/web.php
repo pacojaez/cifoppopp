@@ -111,6 +111,8 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group( function(){
     // Route::delete('/userpurge/{id}', [UserController::class, 'purgeUser'])->name('user.purge');
     // Route::get('/role/destroy/{roleid}/{userid}', [UserController::class, 'removeRole'])->name('user.removeRole');
 
+    Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+
     //****************** RUTA OPTIMIZE:CLEAR **********************************/
     Route::get('/clearcache', function() {
         Artisan::call('cache:clear');

@@ -38,7 +38,6 @@ class AnuncioController extends Controller
             return view('errors.403');
 
             $categorias = Categoria::all()->pluck('nombre', 'id');
-            // dd($categorias);
 
         return view('anuncios.create', [
             'categorias' => $categorias
@@ -87,6 +86,7 @@ class AnuncioController extends Controller
         // if( $userMaxanuncios->value('user_id') == $anuncio->user->id ){
         //     Moreanuncios::dispatch( $anuncio );
         // }
+        $this->emitTo('alertnotification', 'anuncioAdded');
 
         return redirect()->route('anuncio.show', $anuncio)
             ->with('success' , "Anuncio $anuncio->titulo guardado correctamente")

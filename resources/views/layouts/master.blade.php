@@ -66,12 +66,14 @@
 
 <body class="overflow-x-hidden">
     @include('components.navbar2')
+    <livewire:alert-notification />
+
     {{-- @include('navigation-menu') --}}
 
     @includeWhen(Session::has('success'), 'layouts.success')
     @includeWhen($errors->any(), 'layouts.error')
     <main class="flex flex-col items-center justify-center w-full mt-2">
-        {{-- <x-alert /> --}}
+        <x-notifications />
 
         @yield('contenido')
 
@@ -89,6 +91,11 @@
     {{-- <script src="https://cdn.jsdelivr.net/gh/livewire/turbolinks@v0.1.x/dist/livewire-turbolinks.js"
         data-turbolinks-eval="false" data-turbo-eval="false"></script> --}}
     {{-- @stack('scripts') --}}
+    {{-- <script>
+        window.addEventListener('notify', event => {
+            alert('The message: ' + event.detail);
+        })
+    </script> --}}
 </body>
 
 </html>
