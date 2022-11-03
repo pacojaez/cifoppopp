@@ -28,6 +28,9 @@ class EventServiceProvider extends ServiceProvider
         RejectedOfferEvent::class => [
             SendRejectedOfferMessage::class,
         ],
+        OneThousandVisits::class =>[
+            SendOneThousandVisitsCongratulation::class
+        ],
     ];
 
     /**

@@ -14,7 +14,6 @@ class Congratulation extends Mailable
     use Queueable, SerializesModels;
 
     public $mensaje;
-
     /**
      * Create a new message instance.
      *

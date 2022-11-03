@@ -1,6 +1,6 @@
-@extends('layout.master')
+@extends('layouts.master')
 
-@section('titulo', 'Todas las motos de Larabikes')
+@section('titulo', 'Edicio de Usuario')
 
 @section('contenido')
     @can('view', Auth::user())
@@ -16,8 +16,18 @@
                         </label>
                         <input
                             class="block w-full px-4 py-3 mb-3 border rounded appearance-none bg-grey-lighter text-grey-darker border-red"
-                            id="name" type="text" placeholder="un nombre válida" name='name'
+                            id="name" type="text" placeholder="Un nombre válido" name='name'
                             value="{{ $user->name }}">
+                        <p class="text-xs italic text-red">Este campo es obligatorio.</p>
+                    </div>
+                    <div class="px-3 mb-6 md:w-1/2 md:mb-0">
+                        <label class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker" for="name">
+                            APELLIDOS
+                        </label>
+                        <input
+                            class="block w-full px-4 py-3 mb-3 border rounded appearance-none bg-grey-lighter text-grey-darker border-red"
+                            id="apellidos" type="text" placeholder="un apellido válido" name='apellidos'
+                            value="{{ $user->apellidos }}">
                         <p class="text-xs italic text-red">Este campo es obligatorio.</p>
                     </div>
                     <div class="px-3 md:w-1/2">
@@ -32,13 +42,13 @@
                 </div>
                 <div class="mb-2 -mx-3 md:flex">
                     <div class="px-3 mb-6 md:w-1/2 md:mb-0">
-                        <label class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker" for="ciudad">
+                        <label class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker" for="poblacion">
                             Ciudad
                         </label>
                         <input
                             class="block w-full px-4 py-3 border rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter"
-                            id="ciudad" type="text" placeholder="ciudad actuales de la moto" name="ciudad"
-                            value="{{ $user->ciudad }}">
+                            id="poblacion" type="text" placeholder="Poblacion actual" name="poblacion"
+                            value="{{ $user->poblacion }}">
                     </div>
                     <div class="px-3 md:w-1/2">
                         <label class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker" for="provincia">
@@ -56,6 +66,14 @@
                         <input
                             class="block w-full px-4 py-3 border rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter"
                             id="telefono" type="text" placeholder="telefono" name="telefono" value="{{ $user->telefono }}">
+                    </div>
+                    <div class="px-3 mb-6 md:w-1/2 md:mb-0">
+                        <label class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker" for="telefono">
+                            Fecha de Nacimiento
+                        </label>
+                        <input
+                            class="block w-full px-4 py-3 border rounded appearance-none bg-grey-lighter text-grey-darker border-grey-lighter"
+                            id="fechanacimiento" type="date" placeholder="fechanacimiento" name="fechanacimiento" value="{{ $user->fechanacimiento }}">
                     </div>
                     <div class="px-3 mb-6 md:w-1/2 md:mb-0">
                         <label class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker" for="telefono">

@@ -61,7 +61,6 @@
                                         </svg>
                                     </p>
                                 </a>
-
                             </div>
                             <div class="flex flex-wrap items-center ">
                                 <span

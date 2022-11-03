@@ -26,6 +26,6 @@ class Oferta extends Model
     }
 
     public function anuncio(){
-        return $this->belongsTo(Anuncio::class);
+        return $this->belongsTo(Anuncio::class)->withTrashed();
     }
 }

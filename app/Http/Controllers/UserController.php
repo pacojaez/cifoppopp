@@ -16,11 +16,7 @@ class UserController
     //
     public function index(){
 
-
-        $users = User::with('roles')->orderBy('id', 'ASC')->withCount('bikes')->get();
-        // $user = User::first();
-        // foreach($user->roles as $role)
-        //     dd($role);
+        $users = User::with('roles')->orderBy('id', 'ASC')->withCount('anuncios')->get();
 
         return view('users.list', [
             'users' => $users
@@ -102,10 +98,12 @@ class UserController
 
         $request->validate([
             'name' =>'required|max:255',
+            'apellidos' => 'required|max:255',
             'email' =>'required|max:255',
-            'ciudad' =>'required|max:255',
+            'poblacion' =>'required|max:255',
             'provincia' =>'required|max:255',
             'telefono' =>'required|max:255',
+            'fechanacimiento' => 'required',
             'roles' =>'max:255',
         ]);
 
@@ -114,16 +112,14 @@ class UserController
             $user->roles()->save($role);
         }
 
-        $user->update($request->only('name', 'email', 'ciudad', 'provincia', 'telefono'));
+        $user->update($request->only('name', 'apellidos', 'email', 'poblacion', 'provincia', 'telefono', 'fechanacimiento'));
 
         // return back()
         //         ->with('success' , "Usuario  $user->name actualizado correctamente");
-        $users = User::with('roles')->orderBy('id', 'ASC')->withCount('bikes')->get();
+        $users = User::with('roles')->orderBy('id', 'ASC')->withCount('anuncios')->get();
 
-        return view('users.list', [
-            'users' => $users
-            ])
-            ->with('success' , "Role del usuario  $user->name borrado correctamente");
+        return redirect()->route('users.list', [ 'users' => $users ])
+        ->with('success' , "Usuario $user->name con ID $user->id actualizado correctamente");
     }
 
 
@@ -133,12 +129,11 @@ class UserController
         $user = User::findOrFail(request('userid'));
         $user->roles()->detach(request('roleid'));
 
-        $users = User::with('roles')->orderBy('id', 'ASC')->withCount('bikes')->get();
+        $users = User::with('roles')->orderBy('id', 'ASC')->withCount('anuncios')->get();
 
-        return view('users.list', [
-            'users' => $users
-            ])
-            ->with('success' , "Role del usuario  $user->name borrado correctamente");
+        return redirect()->route('users.list', [ 'users' => $users ])
+        ->with('success' , "Usuario $user->name con ID $user->id quitado su rol correctamente");
+
     }
 
     public function destroy( User $user )
@@ -161,20 +156,20 @@ class UserController
 
         $user->delete();
 
-        $bikes = $user->bikes;
-        foreach ($bikes as $bike){
-            $bike->delete();
+        $anuncios = $user->anuncios;
+        foreach ($anuncios as $anuncio){
+            $anuncio->delete();
         }
 
         return redirect()->route('users.trashed')
-                ->with('success' , "Usuario $user->name con ID $user->id y sus motos borrados correctamente");
+                ->with('success' , "Usuario $user->name con ID $user->id y sus anuncios borrados correctamente");
     }
 
     public function trashed (){
         $users = User::onlyTrashed()->with('roles')->orderBy('id', 'ASC')->get();
 
         foreach ($users as $user){
-            $user->bikes_count = count($user->bikes()->withTrashed()->get());
+            $user->anuncios_count = count($user->anuncios()->withTrashed()->get());
         }
 
         return view('users.list', [
@@ -186,7 +181,7 @@ class UserController
         $user = User::withTrashed()->find($id);
         $user->restore();
 
-        $users = User::with('roles')->orderBy('id', 'ASC')->withCount('bikes')->get();
+        $users = User::with('roles')->orderBy('id', 'ASC')->withCount('anuncios')->get();
         // $miperfil = TRUE;
 
         return redirect()->route('users.list', ['users' => $users])

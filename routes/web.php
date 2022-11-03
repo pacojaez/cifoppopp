@@ -100,7 +100,7 @@ Route::middleware('auth')->group( function(){
 });
 
  //****************** GRUPO DE RUTAS PARA AÑADIR ->middleware('isAdmin') **********************************/
-Route::prefix('admin')->group( function(){
+Route::prefix('admin')->middleware('auth', 'isAdmin')->group( function(){
     Route::get('/users', [UserController::class, 'index'])->name('users.list');
     Route::get('/userRestore/{id}', [UserController::class, 'userRestore'])->name('user.restore');
     Route::delete('/userpurge/{id}', [UserController::class, 'purgeUser'])->name('user.purge');

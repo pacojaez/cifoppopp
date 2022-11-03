@@ -4,7 +4,7 @@
 @section('titulo', 'Contacta con CifoPpopP')
 
 @section('contenido')
-<div class="flex items-center justify-start min-h-screen bg-white">
+<div class="flex items-center justify-start mt-5 bg-white">
     <div class="w-full max-w-lg mx-auto">
       <h1 class="text-4xl font-medium">Contacto</h1>
       <p class="mt-3">Mandanos un mail a admin@cifoppopp.com desde aquí:</p>

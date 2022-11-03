@@ -1,4 +1,4 @@
-@extends('layout.master')
+@extends('layouts.master')
 
 @section('titulo', 'Todas las motos de Larabikes')
 
@@ -31,7 +31,7 @@
                                         ALTA
                                     </th>
                                     <th class="p-8 text-xs text-gray-500">
-                                        Nº de MOTOS
+                                        Nº de ANUNCIOS
                                     </th>
                                     <th class="p-8 text-xs text-gray-500">
                                         ROLES
@@ -63,7 +63,7 @@
                                         </td>
                                         <td class="px-6 py-4 text-center">
                                             <div class="text-sm text-gray-900">
-                                                {{ $user->name }}
+                                                {{ $user->name }} {{ $user->apellidos }}
                                             </div>
                                         </td>
                                         <td class="px-6 py-4 text-center">
@@ -75,7 +75,7 @@
                                             {{ $user->created_at }}
                                         </td>
                                         <td class="px-6 py-4 text-sm text-center text-gray-500">
-                                            {{ $user->bikes_count }}
+                                            {{ $user->anuncios_count }}
                                         </td>
                                         <td class="px-6 py-4 text-sm text-center text-gray-500">
                                             @foreach ($user->roles as $role)

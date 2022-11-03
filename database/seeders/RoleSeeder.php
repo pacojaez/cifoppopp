@@ -32,7 +32,11 @@ class RoleSeeder extends Seeder
         ]);
         \App\Models\Role::factory()->create([
             'role' => 'INVITADO',
-            'descripcion' => 'Capaz de casi todo'
+            'descripcion' => 'Capaz de casi nada'
+        ]);
+        \App\Models\Role::factory()->create([
+            'role' => 'BLOQUEADO',
+            'descripcion' => 'Algo mal ha hecho este usuario'
         ]);
     }
 }

@@ -33,7 +33,7 @@ class AnuncioPolicy
 
     public function createOffer(User $user, Anuncio $anuncio )
     {
-        return !$user->isAnuncioOwner( $anuncio );
+        return !$user->isAnuncioOwner( $anuncio ) || $anuncio->isSold();
     }
 
     public function update( User $user, Anuncio $anuncio )

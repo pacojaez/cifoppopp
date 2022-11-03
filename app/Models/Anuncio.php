@@ -28,7 +28,7 @@ class Anuncio extends Model
     ];
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class)->withTrashed();
     }
 
     public function categoria(){
@@ -37,6 +37,10 @@ class Anuncio extends Model
 
     public function ofertas(){
         return $this->hasMany(Oferta::class);
+    }
+
+    public function isSold(){
+        return $this->vendido;
     }
 
 }

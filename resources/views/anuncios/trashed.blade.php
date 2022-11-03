@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('titulo', 'Todas lOos anucnios que has retirado de cifoppopp')
+@section('titulo', 'Todas los anucnios que has retirado de Cifoppopp')
 
 @section('contenido')
 
@@ -46,7 +46,7 @@
                         <h4 class="text-4xl font-bold">{{ $anuncio->titulo }}</h4>
                         <h4 class="text-2xl font-semibold">{{ $anuncio->descripcion }}</h4>
 
-                        <p class="mb-1 text-xl opacity-60 uppercase">
+                        <p class="mb-1 text-xl uppercase opacity-60">
                             CAT: {{ $anuncio->categoria->nombre }}
                         </p>
                         {{-- @if ($anuncio->matriculada)
@@ -65,22 +65,7 @@
                                 DE: {{ $anuncio->user->name }}
                             </p>
                         @endif
-                        {{-- @if (isset($anuncio->concesionario->name))
-                            <div class="p-2 m-2 border shadow card">
-                                <p class="mb-1 text-xl font-bold opacity-80">
-                                    CONCESIONARIO: {{ $anuncio->concesionario->name }}
-                                </p>
-                                <p class="mb-1 text-large opacity-60">
-                                    {{ $anuncio->concesionario->adress }}
-                                </p>
-                                <p class="mb-1 text-large opacity-60">
-                                    {{ $anuncio->concesionario->city }}
-                                </p>
-                                <p class="mb-1 text-large opacity-60">
-                                    {{ $anuncio->concesionario->state }}
-                                </p>
-                            </div>
-                        @endif --}}
+
                         <p class="mb-1 text-xl opacity-60">
                             Visitas: {{ $anuncio->visitas }}
                         </p>
@@ -91,7 +76,7 @@
                                 <p class="self-center text-xs font-bold">Los anuncios solo los pueden editar sus propietarios </p>
                             @endcannot
                             @can('update', $anuncio)
-                            @if( $anuncio->user->deleted_at== NULL )
+                            @if( $anuncio->user != NULL )
                             <div class="flex justify-center mt-6">
                                 <a href="{{ route('anuncio.restore', ['id' => $anuncio->id]) }}">
                                     <p
@@ -131,9 +116,4 @@
 
         </div>
     @endif
-    {{-- <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/ripple.js"></script>
-    <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/colored-shadow.js"></script>
-    <!-- from cdn -->
-    <script src="https://unpkg.com/@material-tailwind/html@latest/scripts/collapse.js"></script>
-    <script src="https://cdn.jsdelivr.net/gh/alpinejs/alpine@v2.x.x/dist/alpine.min.js" defer></script> --}}
 @endsection

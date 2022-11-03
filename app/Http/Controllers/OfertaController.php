@@ -54,9 +54,11 @@ class OfertaController extends Controller
         if( !Auth::check() )
             return view('errors.403');
 
-        if( Oferta::where('user_id', 'like', Auth::id())->where('anuncio_id', 'like', $anuncio->id))
+        $checkedOffer =  Oferta::where('user_id', 'like', $request->user()->id)->where('anuncio_id', 'like', $anuncio->id)->first();
+
+        if( $checkedOffer != NULL )
             return redirect()->route('anuncio.show', $anuncio)
-                ->with('success' , "Ya tienes una oferta realizada a este anuncio");
+                    ->with('success' , "Ya tienes una oferta realizada a este anuncio");
 
         $newOffer = new Oferta();
 

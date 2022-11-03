@@ -19,7 +19,6 @@ class UserPolicy
     public function view(User $user)
     {
         // El ADMINISTRADOR es el único con capcidad de ver listados de usuarios
-        // return $user->email == 'admin@larabikes.com';
         return $user->hasRoles(['ADMINISTRADOR', 'EDITOR']);
     }
 

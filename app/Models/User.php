@@ -37,7 +37,8 @@ class User extends Authenticatable implements MustVerifyEmail
         'cp',
         'telefono',
         'fechanacimiento',
-        'profile_photo_path'
+        'profile_photo_path',
+        'deleted_at'
     ];
 
     /**

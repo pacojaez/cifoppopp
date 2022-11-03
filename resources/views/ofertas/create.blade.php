@@ -3,7 +3,7 @@
 @section('titulo', 'Hacer una oferta Cifoppopp')
 
 @section('contenido')
-<div class="h-full overflow-hidden border-2 border-gray-200 rounded-lg border-opacity-60">
+<div class="flex flex-col justify-center h-full overflow-hidden border-2 border-gray-200 rounded-lg border-opacity-60">
     <div class="w-full">
         <div class="flex w-full p-2">
             <div class="p-2 ">
@@ -48,12 +48,12 @@
         </div>
     </div>
     @can('createOffer', $anuncio )
-        <div class="p-4">
+        <div class="flex flex-row justify-center p-4">
             <form method='POST' action="{{ route('oferta.store', ['anuncio' => $anuncio ]) }}" >
             {{ csrf_field() }}
             {{-- <a href="{{ route('oferta.store', ['anuncio'=> $anuncio ])}}" class="p-2 m-2 font-boldrounded-lg md:mb-2 lg:mb-0"> --}}
                 {{-- <input type="hidden" name="_method" value="DELETE"> --}}
-                <div class="px-3 mb-6 md:w-1/2 md:mb-0">
+                <div class="w-full px-3 mb-6 md:mb-0">
                     <label class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker" for="titulo">
                         Comentario:
                     </label>
@@ -62,7 +62,7 @@
                         id="texto" type="text" placeholder="Por si quieres mandarle un comentario al propietario" name='texto' value="{{ old('texto')}}">
                     <p class="text-xs italic text-red">Este campo es obligatorio.</p>
                 </div>
-                <div class="px-3 mb-6 md:w-1/2 md:mb-0">
+                <div class="w-full px-3 mb-6 md:mb-0">
                     <label class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker" for="titulo">
                         IMPORTE:
                     </label>
@@ -71,7 +71,7 @@
                         id="importe" type="number" name='importe' value="{{ old('importe')}}">
                     <p class="text-xs italic text-red">Este campo es obligatorio.</p>
                 </div>
-                <div class="px-3 mb-6 md:w-1/2 md:mb-0">
+                <div class="w-full px-3 mb-6 md:mb-0">
                     <label class="block mb-2 text-xs font-bold tracking-wide uppercase text-grey-darker" for="titulo">
                         VIGENCIA:
                     </label>

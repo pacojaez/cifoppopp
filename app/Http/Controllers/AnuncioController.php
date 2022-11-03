@@ -7,6 +7,7 @@ use App\Models\Oferta;
 use App\Models\Anuncio;
 use App\Models\Categoria;
 use Illuminate\Http\Request;
+use App\Events\OneThousandVisits;
 use Illuminate\Support\Facades\DB;
 use App\Events\DeletedAnuncioEvent;
 use Illuminate\Support\Facades\Auth;
@@ -98,7 +99,7 @@ class AnuncioController extends Controller
 
         // logica para mandar mail de felicitacion por tener mil visitas
         if( $anuncio->visitas == 1000 ){
-            // OneThousandVisits::dispatch(  $anuncio );
+            OneThousandVisits::dispatch(  $anuncio );
         }
         $ofertas = Oferta::where('anuncio_id', $anuncio->id )->where('rejected', FALSE)->orderBy('importe', 'DESC')->get();
 
@@ -167,7 +168,11 @@ class AnuncioController extends Controller
             $anuncio->update();
         }
 
-        $anuncio->update($request->only('titulo', 'descripcion', 'precio'));
+        if( $request->input('categoria')){
+            $anuncio->categoria_id = $request->input('categoria');
+        }
+
+        $anuncio->update($request->only('titulo', 'descripcion', 'precio', 'categoria_id'));
         //TO DO BORRAR FOTO ANTIGUA DEL SISTEMA DE ARCHIVOS
 
         return back()
@@ -224,9 +229,10 @@ class AnuncioController extends Controller
         //MODO DE TENER RUTAS FIRMADAS CON CLAVES QUE NO SEAN LA APP.KEY
         // URL::setKeyResolver( fn() => config('app.route_key'));
 
-        $anuncio->delete();
+        // $anuncio->delete();
 
         $ofertas = $anuncio->ofertas;
+
         foreach ($ofertas as $oferta){
             DeletedAnuncioEvent::dispatch(  $anuncio, $oferta->user, $oferta );
             $oferta->delete();
@@ -263,7 +269,7 @@ class AnuncioController extends Controller
         $anuncio = anuncio::withTrashed()->find($id);
 
         if( $anuncio->user == NULL ){
-            $anuncios = Anuncio::with('user')->with('concesionario')->orderBy('id', 'ASC')->paginate(12);
+            $anuncios = Anuncio::with('user')->orderBy('id', 'ASC')->paginate(12);
             // $anuncios = anuncio::orderBy('id', 'ASC')->paginate(12);
             $total = Anuncio::count();
 
@@ -274,7 +280,7 @@ class AnuncioController extends Controller
         $anuncio->restore();
 
         if( Auth::user()->hasRoles(['ADMINISTRADOR'])){
-            $anuncios = Anuncio::with('user')->with('anuncio')->orderBy('id', 'ASC')->paginate(12);
+            $anuncios = Anuncio::with('user')->orderBy('id', 'ASC')->paginate(12);
 
             $total = Anuncio::count();
 

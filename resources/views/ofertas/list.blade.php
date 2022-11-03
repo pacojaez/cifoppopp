@@ -7,6 +7,7 @@
 
     @php($pagina = Route::currentRouteName())
     <h2 class="text-2xl font-bold text-red-400">OFERTAS QUE HE REALIZADO</h2>
+    <h4 class="font-semibold text-gray-600 text-large">LAS OFERTAS MARCADAS EN ROJO SON DE PRODUCTOS QUE O BIEN NO ESTÁ EL USUARIO DE ALTA O BIEN EL ANUNCIO YA NO ESTÁ DISPONIBLE</h4>
     <div class="container mx-auto">
         <div class="flex flex-col">
             <div class="w-full">
@@ -59,10 +60,26 @@
                                     <td class="px-6 py-4 text-sm text-center text-gray-500">
                                         {{ $oferta->vigencia }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-center text-gray-500">
+                                    <td @class([
+                                        'px-6',
+                                        'py-4',
+                                        'text-sm',
+                                        'text-center',
+                                        'text-gray-500',
+                                        'bg-red-300' => $oferta->anuncio->deleted_at
+                                        ])
+                                            >
                                         {{ $oferta->anuncio->titulo }}
                                     </td>
-                                    <td class="px-6 py-4 text-sm text-center text-gray-500">
+                                    <td <td @class([
+                                        'px-6',
+                                        'py-4',
+                                        'text-sm',
+                                        'text-center',
+                                        'text-gray-500',
+                                        'bg-red-300' => $oferta->anuncio->user->deleted_at
+                                        ])
+                                    >
                                         {{ $oferta->anuncio->user->email }}
                                     </td>
                                     <td class="px-6 py-4 text-sm text-center text-gray-500">
