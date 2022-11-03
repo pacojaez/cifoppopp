@@ -18,8 +18,9 @@
                                             alt="logo" class="w-10 h-10 overflow-hidden rounded-full" />
                                     </div>
                                     <div class="pt-2 pl-2 ">
-                                        <p class="font-bold">{{ $anuncio->user->name }}</p>
+                                        <p class="font-bold">DE: {{ $anuncio->user->name }}</p>
                                         <p class="text-xs">Añadido: {{ $anuncio->created_at->toDateString() }}</p>
+                                        <p class="font-bold">EN: {{ $anuncio->user->poblacion }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -47,8 +48,8 @@
                                 <h2
                                     class="p-2 m-2 mb-1 text-xs font-bold tracking-widest text-gray-800 uppercase bg-blue-200 rounded-lg p2 title-font">
                                     CATEGORIA:{{ $anuncio->categoria->nombre }}</h2>
-                                <h1 class="mb-3 text-lg font-medium text-gray-900 title-font">{{ $anuncio->descripcion }}
-                                </h1>
+                                <h2 class="mb-3 text-xl font-bold text-gray-900 title-font">{{ $anuncio->titulo }}</h2>
+                                <h3 class="mb-3 text-lg font-medium text-gray-900 title-font">{{ $anuncio->descripcion }}</h3>
                                 <div class="flex flex-wrap items-center ">
                                     <a href="{{ route('anuncio.show', ['anuncio' => $anuncio]) }}"
                                         class="p-2 m-2 text-gray-800 uppercase bg-green-300 rounded-lg md:mb-2 lg:mb-0">

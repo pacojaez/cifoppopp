@@ -23,7 +23,8 @@ class AnuncioCreateRequest extends FormRequest
             'titulo' =>'required|max:255',
             'descripcion' =>'required|max:255',
             'image' => 'sometimes|file|image|mimes:jpg,gif,png,webp|max:2048',
-            'categoria' => 'required'
+            'categoria' => 'required',
+            'precio' => 'required|numeric|min:10'
         ];
     }
 
@@ -33,6 +34,8 @@ class AnuncioCreateRequest extends FormRequest
         'titulo.required' => 'Debes poner el título del Anuncio',
         'descripcion.required' => 'Debes ponerle una descripción',
         'categoria.required' => 'Debes elegir una categoria',
+        'precio.required' => 'Debes ponerle precio',
+        'precio.min' => 'El mínimo que puede valer tu articulo es 10 €'
         ];
         }
 }

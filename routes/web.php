@@ -68,7 +68,7 @@ Route::prefix('naturalmente')->group(function(){
 
 
  //****************** GRUPO DE RUTAS PARA AÑADIR ->middleware('auth) **********************************/
-Route::middleware('auth')->group( function(){
+Route::middleware('auth', 'isNotVerified')->group( function(){
 
     Route::get('/anuncio/create', [AnuncioController::class, 'create'])->name('anuncio.create');
     Route::get('/anuncio/delete/{anuncio}', [AnuncioController::class, 'delete'])->name('anuncio.delete');

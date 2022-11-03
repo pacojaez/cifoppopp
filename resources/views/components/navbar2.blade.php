@@ -31,6 +31,7 @@
                 </ul>
             </nav>
         </div>
+
         <div class="z-10 order-3 hidden w-full shadow-lg md:flex md:items-center md:w-auto md:order-1 bg-slate-400" id="menu">
             @auth
         <x-login-drop-down>
@@ -46,11 +47,9 @@
             </li>
 
             <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                <a class="nav-link" href="{{ route('reset.password') }}">
-                    {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
-                    <span class="{{ $pagina == 'reset.password' ? 'underline font-bold' : '' }}">
-                        RESET PASSWORD
-                    </span>
+                <a class="nav-link" href="{{ route('profile.show' ) }}">
+                    <i class="mr-2 text-base material-icons opacity-60"></i>
+                    <span class="{{ $pagina == 'profile.show' ? 'underline font-bold' : '' }}">MI PERFIL</span>
                 </a>
             </li>
             <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
@@ -108,4 +107,7 @@
 
 
     </div>
+    <!-- search bar -->
+    <x-anuncio-search />
+    <!-- end search bar -->
 </nav>

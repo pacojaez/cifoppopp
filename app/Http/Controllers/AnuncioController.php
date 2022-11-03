@@ -86,7 +86,7 @@ class AnuncioController extends Controller
         // if( $userMaxanuncios->value('user_id') == $anuncio->user->id ){
         //     Moreanuncios::dispatch( $anuncio );
         // }
-        $this->emitTo('alertnotification', 'anuncioAdded');
+        // $this->emitTo('alertnotification', 'anuncioAdded');
 
         return redirect()->route('anuncio.show', $anuncio)
             ->with('success' , "Anuncio $anuncio->titulo guardado correctamente")
@@ -317,6 +317,32 @@ class AnuncioController extends Controller
 
         return back()
                 ->with('success' , "Anuncio $anuncio->titulo borrado definitivamente");
+    }
+
+    /**
+     * search method by marca and modelo
+     */
+    public function search( Request $request ){
+
+        $request->validate([
+           'titulo' => 'max:16',
+           'descripcion' => 'max:16'
+        ]);
+
+        $titulo = $request->input('titulo');
+        $descripcion  = $request->input('descripcion');
+
+        $anuncios = Anuncio::where( "titulo", "LIKE", "%$titulo%")
+                    ->where('descripcion', "LIKE", "%$descripcion%")->get();
+
+        $total = count($anuncios);
+
+        $anuncios = Anuncio::where( "titulo", "LIKE", "%$titulo%")
+                        ->where('descripcion', "LIKE", "%$descripcion%")
+                        ->paginate(12)
+                        ->appends(['titulo'=> $titulo, 'descripcion' => $descripcion ]);
+
+        return view('anuncios.list', ['anuncios' => $anuncios, 'total' => $total, 'titulo'=> $titulo, 'descripcion' => $descripcion]);
     }
 
 
