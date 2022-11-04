@@ -91,9 +91,9 @@ class AnuncioController extends Controller
 // dd($request->session()->all());
         $request->session()->flash('flash.banner', 'Yay it works!');
         $request->session()->flash('flash.bannerStyle', 'success');
-        return redirect('/');
+        // return redirect('/');
 
-        return redirect()->route('anuncio.show', $anuncio)
+        return redirect()->route('anuncio.misanuncios')
             ->with('success' , "Anuncio $anuncio->titulo guardado correctamente")
             ->cookie('lastInsertId', $anuncio->id, 0);
     }

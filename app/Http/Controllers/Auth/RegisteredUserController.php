@@ -57,6 +57,8 @@ class RegisteredUserController extends Controller
             'fechanacimiento' => $request->nacimiento
         ]);
 
+        $user->roles()->attach(4);
+
         event(new Registered($user));
 
         Auth::login($user);

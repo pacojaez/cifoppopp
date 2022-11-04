@@ -64,7 +64,7 @@ Route::prefix('naturalmente')->group(function(){
     Route::post('/contact', [ContactController::class, 'sendMail'])->name('email.contact');
     Route::post('/bloqueado', [BlockedController::class, 'sendMail'])->name('email.blocked');
 
-    Route::get('/categorias', [CategoriaController::class, 'categorias'])->name('categorias.anuncios');
+    Route::get('/categorias', [CategoriaController::class, 'index'])->name('categoria.anuncios');
 
 });
 

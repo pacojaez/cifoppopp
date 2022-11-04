@@ -68,7 +68,6 @@ class CreateNewUser implements CreatesNewUsers
                 });
             });
 
-            dd($transaction);
     }
 
     /**
