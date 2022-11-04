@@ -32,7 +32,7 @@
             </nav>
         </div>
 
-        <div class="z-10 order-3 hidden w-full shadow-lg md:flex md:items-center md:w-auto md:order-1 bg-slate-400"
+        <div class="z-10 order-3 hidden w-full shadow-lg md:flex md:items-center md:w-auto md:order-1"
             id="menu">
             @auth
                 <x-login-drop-down>
@@ -117,17 +117,13 @@
                 <div class="flex flex-wrap items-center justify-end order-2 mr-0 md:order-3 md:mr-4" id="nav-content">
                     <div class="flex items-center w-full auth md:w-full">
                         <a href="{{ route('login') }}"
-                            class="p-2 mr-4 text-gray-800 bg-transparent border border-gray-300 rounded hover:bg-gray-100 hover:text-gray-700">Login</a>
+                            class="p-2 mr-4 text-gray-200 bg-blue-600 border rounded hover:bg-blue-500">Login</a>
                         <a href="{{ route('register') }}"
                             class="p-2 text-gray-200 bg-blue-600 rounded hover:bg-blue-500 hover:text-gray-100">Registro</a>
                     </div>
                 </div>
             @endauth
         </div>
-
-
-
-
     </div>
     <!-- search bar -->
     <x-anuncio-search />

@@ -20,7 +20,7 @@
                                     <div class="pt-2 pl-2 ">
                                         <p class="font-bold">DE: {{ $anuncio->user->name }}</p>
                                         <p class="text-xs">Añadido: {{ $anuncio->created_at->toDateString() }}</p>
-                                        <p class="font-bold">EN: {{ $anuncio->user->poblacion }}</p>
+                                        <p class="font-bold">EN: {{ $anuncio->user->poblacion }}-<span class="font-bold uppercase">{{ $anuncio->user->provincia }}</span></p>
                                     </div>
                                 </div>
                             </div>

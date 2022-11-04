@@ -6,10 +6,10 @@
    @endforeach --}}
 
    <div>
-    <ul class="block w-11/12 mx-auto my-4" x-data="{ selected: null }">
+    <ul class="w-full mx-auto my-4" x-data="{ selected: null }">
         <li class="flex flex-col align-center">
             <h4 @click="selected !== 0 ? selected = 0 : selected = null"
-                class="inline-block px-5 py-3 text-center text-white bg-indigo-300 rounded-t cursor-pointer hover:opacity-75 hover:shadow hover:-mb-3">
+                class="inline-block w-full px-5 py-3 text-center text-white bg-indigo-300 rounded-t cursor-pointer hover:opacity-75 hover:shadow hover:-mb-3">
                 NUESTRAS CATEGORIAS
             </h4>
             <div x-show="selected == 0" class="px-2 py-4 border">

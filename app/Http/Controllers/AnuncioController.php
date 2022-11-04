@@ -244,6 +244,8 @@ class AnuncioController extends Controller
             $oferta->delete();
         }
 
+        $anuncio->delete();
+
         return redirect()->route('anuncios.trashed', [
             'user' => Auth::user()
         ])
