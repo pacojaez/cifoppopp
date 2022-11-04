@@ -132,14 +132,12 @@ class AnuncioController extends Controller
         // if(Auth::user()->cant('update', $anuncio))
         $user = $request->user();
 
-        $categorias = Categoria::all()->pluck('nombre', 'id');
-            // dd($categorias);
-
         if( $user->cant('update', $anuncio))
-            return view('errors.403');
+        return view('errors.403');
 
-            $value = $request->session()->flash('status', '1');
-            dd($value);
+        $categorias = Categoria::all()->pluck('nombre', 'id');
+
+        $value = $request->session()->flash('status', '1');
 
         return view('anuncios.update', [
             'anuncio'=>$anuncio,

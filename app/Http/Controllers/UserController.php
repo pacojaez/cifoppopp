@@ -38,6 +38,18 @@ class UserController
             'users' => $users
         ]);
     }
+    /**
+     * return the admin panel layout
+     */
+    //
+    public function adminPanel(){
+
+        $users = User::with('roles')->orderBy('id', 'ASC')->withCount('anuncios')->get();
+
+        return view('layouts.admin', [
+            'users' => $users
+        ]);
+    }
 
     //
     public function index(){

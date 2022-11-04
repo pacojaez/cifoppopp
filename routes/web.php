@@ -115,6 +115,8 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group( function(){
 
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
     Route::get('/coherenciaDatosDB', [UserController::class, 'coherenciaDatosDB'])->name('user.coherenciaDatosDB');
+    Route::get('/adminPanel', [UserController::class, 'adminPanel'])->name('user.adminPanel');
+
 
 
     //****************** RUTA OPTIMIZE:CLEAR **********************************/

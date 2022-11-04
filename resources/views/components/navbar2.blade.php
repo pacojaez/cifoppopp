@@ -105,6 +105,12 @@
                                 <span class="{{ $pagina == 'user.coherenciaDatosDB' ? 'underline font-bold' : '' }}">coherenciaDatosDB</span>
                             </a>
                         </li>
+                        <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                            <a class="nav-link" href="{{ route('user.adminPanel') }}">
+                                {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
+                                <span class="{{ $pagina == 'user.adminPanel' ? 'underline font-bold' : '' }}">PANEL DE ADMINISTRACIÓN</span>
+                            </a>
+                        </li>
                     @endcan
                 </x-login-drop-down>
             @else

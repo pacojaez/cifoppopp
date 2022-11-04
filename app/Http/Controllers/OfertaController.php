@@ -97,7 +97,7 @@ class OfertaController extends Controller
         foreach( $rejected as $oferta){
             //mandar un mail a cada usuario de la oferta rechazada
             //crear un ecçvento OfertaRechazadaEvent
-            RejectedOfferEvent::dispatch( $oferta->user, $anuncio, $oferta );
+            RejectedOfferEvent::dispatch( $anuncio, $oferta->user, $oferta );
             $oferta->rejected = TRUE;
             $oferta->save();
         }
@@ -109,36 +109,23 @@ class OfertaController extends Controller
         return redirect()->route('anuncio.show', [
             'anuncio' => $anuncio
             ])
-        ->with('success' , "El anuncio $anuncio->titulo del usuario ha recibido la oferta correctamente");
+        ->with('success' , "El/Los usuario/s de las otras ofertas del anuncio $anuncio->titulo han sido notificados que este anuncio ya se ha vendido");
     }
 
     public function rejected( Request $request, Oferta $oferta ){
-        // dd($oferta);
+
         $anuncio = Anuncio::where('id', $oferta->anuncio_id)->first();
 
-        // $collect = $anuncio->ofertas;
-        //Sacamos de la collection la oferta aceptada
-        // $rejected = $collect->filter(function ($value, $key) use ( $oferta ) {
-        //     return data_get( $value, 'id') != $oferta->id;
-        // });
         $oferta->rejected = TRUE;
         $oferta->save();
+        $mail_oferta_user = $oferta->user->email;
 
-        // $rejected = $rejected->all();
-        // foreach( $rejected as $oferta){
-            //mandar un mail a cada usuario de la oferta rechazada
-            //crear un ecçvento OfertaRechazadaEvent
-            RejectedOfferEvent::dispatch( $anuncio, $oferta->user, $oferta );
-            // $oferta->delete();
-        // }
-
-        //poner el anuncio como VENDIDO
-
+        RejectedOfferEvent::dispatch( $anuncio, $oferta->user, $oferta );
 
         return redirect()->route('anuncio.show', [
             'anuncio' => $anuncio
             ])
-        ->with('success' , "El anuncio $anuncio->titulo del usuario ha recibido la oferta correctamente");
+        ->with('success' , "El propietario $mail_oferta_user de la oferta ha sido notificado que su oferta ha sido rechazada");
     }
 
     public function list(){
