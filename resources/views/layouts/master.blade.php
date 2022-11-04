@@ -66,7 +66,7 @@
 
 <body class="overflow-x-hidden">
     @include('components.navbar2')
-    <livewire:alert-notification />
+    {{-- <livewire:alert-notification /> --}}
     <livewire:categoria-index />
 
     {{-- @include('navigation-menu') --}}
