@@ -17,6 +17,7 @@ class AuthServiceProvider extends ServiceProvider
         Team::class => TeamPolicy::class,
         // 'App\Models\Bike' => 'App\Policies\BikePolicy',
         'App\Models\User' => 'App\Policies\UserPolicy',
+        Anuncio::class => AnuncioPolicy::class,
     ];
 
     /**

@@ -50,13 +50,13 @@ class DatabaseSeeder extends Seeder
                     $user->roles()->attach(1);
                     continue;
                 }
-
-                foreach($roles as $role){
-                    if( $role->id === 1)
-                        continue;
-                    if( rand(1,100) > 80)
-                        $user->roles()->attach($role->id);
-                }
+                    if( rand(1,100) > 80 ){
+                        $user->email_verified_at = NULL;
+                        $user->save();
+                        $user->roles()->attach(4);
+                    }else{
+                        $user->roles()->attach(3);
+                    }
             }
 
             \App\Models\Oferta::factory(1000)->create();

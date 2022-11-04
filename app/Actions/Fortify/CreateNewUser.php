@@ -36,21 +36,39 @@ class CreateNewUser implements CreatesNewUsers
             'terms' => Jetstream::hasTermsAndPrivacyPolicyFeature() ? ['accepted', 'required'] : '',
         ])->validate();
 
-        return DB::transaction(function () use ($input) {
-            return tap(User::create([
-                'name' => $input['name'],
-                'apellidos' => $input['apellidos'],
-                'email' => $input['email'],
-                'password' => Hash::make($input['password']),
-                'poblacion' => $input['poblacion'],
-                'provincia' => $input['provincia'],
-                'cp' => $input['cp'],
-                'telefono' => $input['telefono'],
-                'fechanacimiento' => $input['fechanacimiento'],
-            ]), function (User $user) {
-                $this->createTeam($user);
+        // return DB::transaction(function () use ($input) {
+        //     return tap(User::create([
+        //         'name' => $input['name'],
+        //         'apellidos' => $input['apellidos'],
+        //         'email' => $input['email'],
+        //         'password' => Hash::make($input['password']),
+        //         'poblacion' => $input['poblacion'],
+        //         'provincia' => $input['provincia'],
+        //         'cp' => $input['cp'],
+        //         'telefono' => $input['telefono'],
+        //         'fechanacimiento' => $input['fechanacimiento'],
+        //     ]), function (User $user) {
+        //         $this->createTeam($user);
+        //     });
+        // });
+
+        $transaction =  DB::transaction(function () use ($input) {
+                return tap(User::create([
+                    'name' => $input['name'],
+                    'apellidos' => $input['apellidos'],
+                    'email' => $input['email'],
+                    'password' => Hash::make($input['password']),
+                    'poblacion' => $input['poblacion'],
+                    'provincia' => $input['provincia'],
+                    'cp' => $input['cp'],
+                    'telefono' => $input['telefono'],
+                    'fechanacimiento' => $input['fechanacimiento'],
+                ]), function (User $user) {
+                    $this->createTeam($user);
+                });
             });
-        });
+
+            dd($transaction);
     }
 
     /**

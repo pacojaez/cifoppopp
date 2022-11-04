@@ -3,7 +3,9 @@
 namespace App\Providers;
 
 use App\Events\AddedOfertaEvent;
+use App\Events\GiveRoleVerificado;
 use App\Events\RejectedOfferEvent;
+use App\Listeners\AddRoleVerificadoNewVerifiedUser;
 use App\Listeners\SendNewOfferNotification;
 use App\Listeners\SendRejectedOfferMessage;
 use Illuminate\Auth\Events\Registered;
@@ -30,6 +32,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         OneThousandVisits::class =>[
             SendOneThousandVisitsCongratulation::class
+        ],
+        GiveRoleVerificado::class =>[
+            AddRoleVerificadoNewVerifiedUser::class
         ],
     ];
 

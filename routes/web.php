@@ -9,6 +9,7 @@ use App\Http\Actions\DeleteUnusedImages;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\OfertaController;
 use App\Http\Controllers\AnuncioController;
+use App\Http\Controllers\BlockedController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\WelcomeController;
 use App\Http\Controllers\CategoriaController;
@@ -61,6 +62,7 @@ Route::prefix('naturalmente')->group(function(){
 
     Route::get('/contact', [ContactController::class, 'index'])->name('contact');
     Route::post('/contact', [ContactController::class, 'sendMail'])->name('email.contact');
+    Route::post('/bloqueado', [BlockedController::class, 'sendMail'])->name('email.blocked');
 
     Route::get('/categorias', [CategoriaController::class, 'categorias'])->name('categorias.anuncios');
 
@@ -68,7 +70,7 @@ Route::prefix('naturalmente')->group(function(){
 
 
  //****************** GRUPO DE RUTAS PARA AÑADIR ->middleware('auth) **********************************/
-Route::middleware('auth', 'isNotVerified')->group( function(){
+Route::middleware('auth', 'verified', 'isBlocked')->group( function(){
 
     Route::get('/anuncio/create', [AnuncioController::class, 'create'])->name('anuncio.create');
     Route::get('/anuncio/delete/{anuncio}', [AnuncioController::class, 'delete'])->name('anuncio.delete');
@@ -112,6 +114,8 @@ Route::prefix('admin')->middleware('auth', 'isAdmin')->group( function(){
     // Route::get('/role/destroy/{roleid}/{userid}', [UserController::class, 'removeRole'])->name('user.removeRole');
 
     Route::get('/dashboard', [UserController::class, 'dashboard'])->name('user.dashboard');
+    Route::get('/coherenciaDatosDB', [UserController::class, 'coherenciaDatosDB'])->name('user.coherenciaDatosDB');
+
 
     //****************** RUTA OPTIMIZE:CLEAR **********************************/
     Route::get('/clearcache', function() {

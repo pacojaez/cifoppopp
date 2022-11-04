@@ -17,7 +17,7 @@ class AnuncioPolicy
 
     public function view(User $user, Anuncio $anuncio)
     {
-        return TRUE;
+        return $user->email_verified_at;
     }
 
     public function viewOffers(User $user, Anuncio $anuncio)
@@ -28,12 +28,12 @@ class AnuncioPolicy
 
     public function create(User $user)
     {
-        return $user->hasVerifiedEmail();
+        return $user->email_verified_at;
     }
 
     public function createOffer(User $user, Anuncio $anuncio )
     {
-        return !$user->isAnuncioOwner( $anuncio ) || $anuncio->isSold();
+        return !$user->isAnuncioOwner( $anuncio ) || $anuncio->isSold() || !$user->hasVerifiedEmail();
     }
 
     public function update( User $user, Anuncio $anuncio )

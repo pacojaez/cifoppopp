@@ -62,7 +62,10 @@
                                             {{ $user->id }}
                                         </td>
                                         <td class="px-6 py-4 text-center">
-                                            <div class="text-sm text-gray-900">
+                                            <div @class([
+                                                'bg-red-400' => $user->hasRoles(['BLOQUEADO']),
+                                                'bg-red-200' => $user->hasRoles(['IDENTIFICADO']),
+                                            ])>
                                                 {{ $user->name }} {{ $user->apellidos }}
                                             </div>
                                         </td>

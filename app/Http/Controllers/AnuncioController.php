@@ -34,14 +34,15 @@ class AnuncioController extends Controller
      */
     public function create()
     {
-        if( !Auth::check() )
-            return view('errors.403');
+        // if( !Auth::check() )
+        //     return view('errors.403');
 
-            $categorias = Categoria::all()->pluck('nombre', 'id');
+        $categorias = Categoria::all()->pluck('nombre', 'id');
 
         return view('anuncios.create', [
             'categorias' => $categorias
         ]);
+
     }
 
     public function store( AnuncioCreateRequest $request)
@@ -87,6 +88,10 @@ class AnuncioController extends Controller
         //     Moreanuncios::dispatch( $anuncio );
         // }
         // $this->emitTo('alertnotification', 'anuncioAdded');
+// dd($request->session()->all());
+        $request->session()->flash('flash.banner', 'Yay it works!');
+        $request->session()->flash('flash.bannerStyle', 'success');
+        return redirect('/');
 
         return redirect()->route('anuncio.show', $anuncio)
             ->with('success' , "Anuncio $anuncio->titulo guardado correctamente")
@@ -132,6 +137,9 @@ class AnuncioController extends Controller
 
         if( $user->cant('update', $anuncio))
             return view('errors.403');
+
+            $value = $request->session()->flash('status', '1');
+            dd($value);
 
         return view('anuncios.update', [
             'anuncio'=>$anuncio,

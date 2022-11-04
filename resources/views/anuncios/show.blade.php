@@ -65,27 +65,58 @@
                 </div>
             </div>
             @can('createOffer', $anuncio)
-                @if (!$anuncio->isSold())
-                    <div class="p-4">
-                        <a href="{{ route('oferta.create', ['anuncio' => $anuncio]) }}"
-                            class="p-2 m-2 font-boldrounded-lg md:mb-2 lg:mb-0">
-                            {{-- <input type="hidden" name="_method" value="DELETE"> --}}
-                            <div class="flex justify-center mt-6">
-                                <p type="submit"
-                                    class="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-500 rounded-md dark:bg-red-600 dark:hover:bg-red-700 dark:focus:bg-red-700 hover:bg-red-600 focus:outline-none focus:bg-red-500 focus:ring focus:ring-red-300 focus:ring-opacity-50">
-                                    HACER OFERTA
-                                </p>
+                @if (Auth::user()->hasVerifiedEmail())
+                    @if (!$anuncio->isSold())
+                        <div class="p-4">
+                            <a href="{{ route('oferta.create', ['anuncio' => $anuncio]) }}"
+                                class="p-2 m-2 font-boldrounded-lg md:mb-2 lg:mb-0">
+                                {{-- <input type="hidden" name="_method" value="DELETE"> --}}
+                                <div class="flex justify-center mt-6">
+                                    <p type="submit"
+                                        class="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-red-500 rounded-md dark:bg-red-600 dark:hover:bg-red-700 dark:focus:bg-red-700 hover:bg-red-600 focus:outline-none focus:bg-red-500 focus:ring focus:ring-red-300 focus:ring-opacity-50">
+                                        HACER OFERTA
+                                    </p>
+                                </div>
+                            </a>
+                        </div>
+                    @else
+                        <div class="p-4">
+                            <div class="p-2 m-2 font-boldrounded-lg md:mb-2 lg:mb-0">
+                                <div class="flex justify-center mt-6">
+                                    <p
+                                        class="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-500 rounded-md dark:bg-red-600 dark:hover:bg-gray-700 dark:focus:bg-red-700 hover:bg-gray-600 focus:outline-none focus:bg-red-500 focus:ring focus:ring-red-300 focus:ring-opacity-50">
+                                        NO SE PUEDEN REALIZAR OFERTAS A UN ANUNCIO YA VENDIDO
+                                    </p>
+                                </div>
                             </div>
-                        </a>
-                    </div>
+                        </div>
+                    @endif
                 @else
                     <div class="p-4">
                         <div class="p-2 m-2 font-boldrounded-lg md:mb-2 lg:mb-0">
-                            <div class="flex justify-center mt-6">
+                            <div class="flex flex-col justify-center mt-6">
                                 <p
-                                    class="px-3 py-2 text-sm tracking-wide text-white capitalize transition-colors duration-200 transform bg-gray-500 rounded-md dark:bg-red-600 dark:hover:bg-gray-700 dark:focus:bg-red-700 hover:bg-gray-600 focus:outline-none focus:bg-red-500 focus:ring focus:ring-red-300 focus:ring-opacity-50">
-                                    NO SE PUEDEN REALIZAR OFERTAS A UN ANUNCIO YA VENDIDO
+                                    class="px-3 py-2 text-sm tracking-wide text-center text-white capitalize transition-colors duration-200 transform bg-gray-500 rounded-md dark:bg-red-600 dark:focus:bg-red-700 focus:outline-none focus:bg-red-500 focus:ring focus:ring-red-300 focus:ring-opacity-50">
+                                    Tienes que verificar tu mail antes de poder hacer alguna oferta
                                 </p>
+                                <a href="{{ route('profile.show') }}" class="p-2 m-2 font-boldrounded-lg md:mb-2 lg:mb-0">
+                                    {{-- <input type="hidden" name="_method" value="DELETE"> --}}
+                                    <p
+                                        class="px-3 py-2 text-sm tracking-wide text-center text-white capitalize transition-colors duration-200 transform bg-red-500 rounded-md dark:bg-red-600 dark:hover:bg-red-700 dark:focus:bg-red-700 hover:bg-red-600 focus:outline-none focus:bg-red-500 focus:ring focus:ring-red-300 focus:ring-opacity-50">
+                                        {{ __('Editar Perfil') }}
+                                    </p>
+                                </a>
+                                <form method="POST" action="{{ route('verification.send') }}" class="p-2 m-2 font-boldrounded-lg md:mb-2 lg:mb-0">
+                                    @csrf
+
+                                    <div class="px-3 py-2 text-sm tracking-wide text-center text-white capitalize transition-colors duration-200 transform bg-red-500 rounded-md dark:bg-red-600 dark:hover:bg-red-700 dark:focus:bg-red-700 hover:bg-red-600 focus:outline-none focus:bg-red-500 focus:ring focus:ring-red-300 focus:ring-opacity-50">
+
+                                        <button type="submit">
+                                            {{ __('Enviar Mail de Verificación') }}
+                                        </button>
+
+                                    </div>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -135,7 +166,8 @@
                 </h2>
                 @foreach ($ofertas as $oferta)
                     <div class="flex flex-col flex-wrap items-center p-2 m-2 shadow-md">
-                        <h3 class="mb-3 text-lg font-medium text-gray-900 title-font">Oferta de: {{ $oferta->user->name }}</h3>
+                        <h3 class="mb-3 text-lg font-medium text-gray-900 title-font">Oferta de: {{ $oferta->user->name }}
+                        </h3>
                         <h3 class="mb-3 text-lg font-medium text-gray-900 title-font">COMENTARIO: {{ $oferta->texto }}</h3>
                         <h5 class="mb-3 text-xs font-bold text-gray-900 title-font">OFERTA REALIZADA EL :
                             {{ $oferta->created_at->toDateString() }}</h5>

@@ -13,6 +13,32 @@ use Illuminate\Support\Collection as SupportCollection;
 
 class UserController
 {
+
+    public function coherenciaDatosDB(){
+
+        $users = User::where('email_verified_at', NULL)->with('roles')->get();
+        foreach($users as $user)
+        {
+            if($user->hasRoles('IDENTIFICADO'))
+                continue;
+            $user->roles()->attach(4);
+            $user->roles()->detach([3,5]);
+        }
+        $users = User::where('email_verified_at', '!=', NULL)->with('roles')->get();
+        foreach($users as $user)
+        {
+            if($user->hasRoles('VERIFICADO'))
+                continue;
+            $user->roles()->attach(3);
+            $user->roles()->detach([5,4]);
+        }
+
+        $users = User::with('roles')->orderBy('id', 'ASC')->withCount('anuncios')->get();
+        return view('users.list', [
+            'users' => $users
+        ]);
+    }
+
     //
     public function index(){
 
@@ -107,15 +133,27 @@ class UserController
             'roles' =>'max:255',
         ]);
 
-        if(isset($request['roles'])){
-            $role = Role::find($request['roles']);
-            $user->roles()->save($role);
+        if($request->input('roles')){
+            // dd($request->input('roles'));
+            $user->roles()->attach($request->input('roles'));
+
+            if( $user->hasRoles('BLOQUEADO')){
+                $anuncios = $user->anuncios;
+                    foreach ($anuncios as $anuncio){
+                        foreach($anuncio->ofertas as $oferta){
+                            $oferta->delete();
+                        }
+                        $anuncio->delete();
+                    }
+                $ofertas = $user->ofertas;
+                foreach($ofertas as $oferta){
+                    $oferta->delete();
+                }
+            }
         }
 
         $user->update($request->only('name', 'apellidos', 'email', 'poblacion', 'provincia', 'telefono', 'fechanacimiento'));
 
-        // return back()
-        //         ->with('success' , "Usuario  $user->name actualizado correctamente");
         $users = User::with('roles')->orderBy('id', 'ASC')->withCount('anuncios')->get();
 
         return redirect()->route('users.list', [ 'users' => $users ])

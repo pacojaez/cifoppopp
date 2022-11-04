@@ -13,7 +13,7 @@
         <input class="hidden" type="checkbox" id="menu-toggle">
 
         <div class="order-3 hidden w-full md:flex md:items-center md:w-auto md:order-1" id="menu">
-            <a class="ml-0 mr-auto nav-brand" href=" href="{{ route('welcome')}}">
+            <a class="ml-0 mr-auto nav-brand" href=" href="{{ route('welcome') }}">
                 <img src="{{ asset('img/corporativo/logocifoppopp.png') }}" style="height:100px; width:100px"
                     alt="logoCifoPpopP" />
             </a>
@@ -25,82 +25,98 @@
                     {{-- <li><a class="inline-block px-4 py-2 text-lg font-medium no-underline hover:text-black lg:-ml-2"
                             href="{{ route('welcome')}}">Home</a></li> --}}
                     <li><a class="inline-block px-4 py-2 text-lg font-medium no-underline hover:text-black lg:-ml-2"
-                            href="{{ route('anuncio.index')}}">Productos</a></li>
+                            href="{{ route('anuncio.index') }}">Productos</a></li>
                     <li><a class="inline-block px-4 py-2 text-lg font-medium no-underline hover:text-black lg:-ml-2"
-                            href="{{ route('contact')}}">Contacto</a></li>
+                            href="{{ route('contact') }}">Contacto</a></li>
                 </ul>
             </nav>
         </div>
 
-        <div class="z-10 order-3 hidden w-full shadow-lg md:flex md:items-center md:w-auto md:order-1 bg-slate-400" id="menu">
+        <div class="z-10 order-3 hidden w-full shadow-lg md:flex md:items-center md:w-auto md:order-1 bg-slate-400"
+            id="menu">
             @auth
-        <x-login-drop-down>
-            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                <form class="nav-link" action="{{ route('logout') }}" method="POST">
-                    @csrf
-                    <button type="submit" class="">
-                        <span class="{{ $pagina == 'password.reset' ? 'underline font-bold' : '' }}">
-                            LOGOUT
-                        </span>
-                    </button>
-                </form>
-            </li>
+                <x-login-drop-down>
+                    <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                        <form class="nav-link" action="{{ route('logout') }}" method="POST">
+                            @csrf
+                            <button type="submit" class="">
+                                <span class="{{ $pagina == 'password.reset' ? 'underline font-bold' : '' }}">
+                                    LOGOUT
+                                </span>
+                            </button>
+                        </form>
+                    </li>
 
-            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                <a class="nav-link" href="{{ route('profile.show' ) }}">
-                    <i class="mr-2 text-base material-icons opacity-60"></i>
-                    <span class="{{ $pagina == 'profile.show' ? 'underline font-bold' : '' }}">MI PERFIL</span>
-                </a>
-            </li>
-            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                <a class="nav-link" href="{{ route('anuncio.create' ) }}">
-                    <i class="mr-2 text-base material-icons opacity-60"></i>
-                    <span class="{{ $pagina == 'anuncio.create' ? 'underline font-bold' : '' }}">CREAR ANUNCIO</span>
-                </a>
-            </li>
-            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                <a class="nav-link" href="{{ route('anuncio.misanuncios' ) }}">
-                    <i class="mr-2 text-base material-icons opacity-60"></i>
-                    <span class="{{ $pagina == 'anuncio.misanuncios' ? 'underline font-bold' : '' }}">MIS ANUNCIOS</span>
-                </a>
-            </li>
-            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                <a class="nav-link" href="{{ route('anuncios.trashed', ['user'=> Auth::user()] ) }}">
-                    <i class="mr-2 text-base material-icons opacity-60"></i>
-                    <span class="{{ $pagina == 'anuncios.trashed' ? 'underline font-bold' : '' }}">ANUNCIOS ELIMINADOS</span>
-                </a>
-            </li>
-            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                <a class="nav-link" href="{{ route('oferta.list' ) }}">
-                    <i class="mr-2 text-base material-icons opacity-60"></i>
-                    <span class="{{ $pagina == 'ofertas.misofertas' ? 'underline font-bold' : '' }}">MIS OFERTAS</span>
-                </a>
-            </li>
-            @can('update', Auth::user())
-                <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                    <a class="nav-link" href="{{ route('users.list') }}">
-                        {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
-                        <span class="{{ $pagina == 'users.list' ? 'underline font-bold' : '' }}">USUARIOS</span>
-                    </a>
-                </li>
-                <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
-                    <a class="nav-link" href="{{ route('users.trashed') }}">
-                        {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
-                        <span class="{{ $pagina == 'users.trashed' ? 'underline font-bold' : '' }}">USUARIOS DADOS
-                            DE BAJA</span>
-                    </a>
-                </li>
-            @endcan
-        </x-login-drop-down>
-        @else
-        <div class="flex flex-wrap items-center justify-end order-2 mr-0 md:order-3 md:mr-4" id="nav-content">
-            <div class="flex items-center w-full auth md:w-full">
-                <a href="{{ route('login')}}"
-                    class="p-2 mr-4 text-gray-800 bg-transparent border border-gray-300 rounded hover:bg-gray-100 hover:text-gray-700">Login</a>
-                <a href="{{ route('register')}}" class="p-2 text-gray-200 bg-blue-600 rounded hover:bg-blue-500 hover:text-gray-100">Registro</a>
-            </div>
-        </div>
-        @endauth
+                    <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                        <a class="nav-link" href="{{ route('profile.show') }}">
+                            <i class="mr-2 text-base material-icons opacity-60"></i>
+                            <span class="{{ $pagina == 'profile.show' ? 'underline font-bold' : '' }}">MI PERFIL</span>
+                        </a>
+                    </li>
+                    {{-- @can('create', Auth::id(), \App\Models\Anuncio::class) --}}
+                        @if (Auth::user()->email_verified_at)
+                            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                                <a class="nav-link" href="{{ route('anuncio.create') }}">
+                                    <i class="mr-2 text-base material-icons opacity-60"></i>
+                                    <span class="{{ $pagina == 'anuncio.create' ? 'underline font-bold' : '' }}">CREAR
+                                        ANUNCIO</span>
+                                </a>
+                            </li>
+                            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                                <a class="nav-link" href="{{ route('anuncio.misanuncios') }}">
+                                    <i class="mr-2 text-base material-icons opacity-60"></i>
+                                    <span class="{{ $pagina == 'anuncio.misanuncios' ? 'underline font-bold' : '' }}">MIS
+                                        ANUNCIOS</span>
+                                </a>
+                            </li>
+                            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                                <a class="nav-link" href="{{ route('anuncios.trashed', ['user' => Auth::user()]) }}">
+                                    <i class="mr-2 text-base material-icons opacity-60"></i>
+                                    <span class="{{ $pagina == 'anuncios.trashed' ? 'underline font-bold' : '' }}">ANUNCIOS
+                                        ELIMINADOS</span>
+                                </a>
+                            </li>
+                            <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                                <a class="nav-link" href="{{ route('oferta.list') }}">
+                                    <i class="mr-2 text-base material-icons opacity-60"></i>
+                                    <span class="{{ $pagina == 'ofertas.misofertas' ? 'underline font-bold' : '' }}">MIS
+                                        OFERTAS</span>
+                                </a>
+                            </li>
+                        @endif
+                    {{-- @endcan --}}
+                    @can('update', Auth::user())
+                        <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                            <a class="nav-link" href="{{ route('users.list') }}">
+                                {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
+                                <span class="{{ $pagina == 'users.list' ? 'underline font-bold' : '' }}">USUARIOS</span>
+                            </a>
+                        </li>
+                        <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                            <a class="nav-link" href="{{ route('users.trashed') }}">
+                                {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
+                                <span class="{{ $pagina == 'users.trashed' ? 'underline font-bold' : '' }}">USUARIOS DADOS
+                                    DE BAJA</span>
+                            </a>
+                        </li>
+                        <li class="px-3 py-1 rounded-sm hover:bg-gray-100">
+                            <a class="nav-link" href="{{ route('user.coherenciaDatosDB') }}">
+                                {{-- <i class="mr-2 text-base material-icons opacity-60"></i> --}}
+                                <span class="{{ $pagina == 'user.coherenciaDatosDB' ? 'underline font-bold' : '' }}">coherenciaDatosDB</span>
+                            </a>
+                        </li>
+                    @endcan
+                </x-login-drop-down>
+            @else
+                <div class="flex flex-wrap items-center justify-end order-2 mr-0 md:order-3 md:mr-4" id="nav-content">
+                    <div class="flex items-center w-full auth md:w-full">
+                        <a href="{{ route('login') }}"
+                            class="p-2 mr-4 text-gray-800 bg-transparent border border-gray-300 rounded hover:bg-gray-100 hover:text-gray-700">Login</a>
+                        <a href="{{ route('register') }}"
+                            class="p-2 text-gray-200 bg-blue-600 rounded hover:bg-blue-500 hover:text-gray-100">Registro</a>
+                    </div>
+                </div>
+            @endauth
         </div>
 
 

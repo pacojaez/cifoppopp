@@ -4,9 +4,8 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 
-class isNotVerified
+class isVerified
 {
     /**
      * Handle an incoming request.
@@ -17,9 +16,7 @@ class isNotVerified
      */
     public function handle(Request $request, Closure $next)
     {
-        if( Auth::user()->hasRoles(['IDENTIFICADO', 'INVITADO']))
-            abort(403, 'Acceso denegado, debes ser administrador para realizar estas tareas');
-
-        return $next($request);
+        if( $request->user()->hasRoles(['VERIFICADO', 'EDITOR', 'ADMINISTRADOR']))
+            return $next($request);
     }
 }
